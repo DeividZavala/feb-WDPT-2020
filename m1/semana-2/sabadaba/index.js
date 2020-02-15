@@ -82,9 +82,36 @@ function getCount(str) {
 
 const numbers = [22, 23, 99, 68, 1, 0, 9, 112, 223, 64, 18];
 
-numbers.sort((a, b) => {
-  console.log(a, b);
-  return a - b;
+/*numbers.sort((a,b)=> {
+
+  console.log(a,b)
+return a - b
+})*/
+
+//console.log(numbers)
+
+const product = {
+  id: 1,
+  name: "sneakers",
+  price: 4000,
+  currency: "MXN",
+  stock: 20,
+  size: 28
+};
+
+const { price, name, ...sin_price } = product;
+
+//console.log(sin_price)
+
+const users = amazon.reviews.map(item => {
+  const { user } = item;
+  return user;
 });
 
-console.log(numbers);
+//console.log(users)
+
+const morritos = ["Benja", "Gladys", "Josafat"];
+
+const [, , morro3] = morritos;
+
+console.log(morro3);

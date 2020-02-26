@@ -1,0 +1,18 @@
+.color {
+  background-color: red;
+  width: 100%;
+  height: 200px;
+}
+
+@media screen and (max-width: 700px) {
+  .color {
+    background-color: blue;
+    height: 100px;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .color {
+    background-color: blueviolet;
+  }
+}

@@ -1,0 +1,32 @@
+nav {
+  background-color: green;
+  height: 60px;
+  margin-bottom: 2%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+}
+
+nav ul li {
+  width: 20px;
+  height: 30px;
+  background-color: black;
+  margin-right: 10px;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.grid div {
+  width: 300px;
+  height: 300px;
+  margin-bottom: 0.5%;
+  background-color: red;
+}

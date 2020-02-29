@@ -1,0 +1,9 @@
+.uk-navbar {
+  height: 60px;
+}
+
+ul.uk-navbar-nav,
+ul.uk-navbar-nav > li > a {
+  height: 60px;
+  min-height: 60px;
+}

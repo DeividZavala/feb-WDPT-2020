@@ -1,0 +1,7 @@
+.item {
+  display: flex;
+}
+
+.item div:first-child {
+  margin-right: 2%;
+}

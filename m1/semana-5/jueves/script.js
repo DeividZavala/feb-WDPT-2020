@@ -108,7 +108,9 @@ function update() {
   generateEnemies();
   drawingEnemies();
 
-  requestId = requestAnimationFrame(update);
+  if (requestId) {
+    requestId = requestAnimationFrame(update);
+  }
 }
 
 addEventListener("keydown", e => {
@@ -129,7 +131,7 @@ function start() {
 
 function stop() {
   background.gameOver();
-  cancelAnimationFrame(requestId);
+  requestId = undefined;
 }
 
 start();

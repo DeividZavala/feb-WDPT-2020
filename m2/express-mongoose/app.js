@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 
 mongoose
   .connect("mongodb://localhost/express-mongoose", {
+    useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

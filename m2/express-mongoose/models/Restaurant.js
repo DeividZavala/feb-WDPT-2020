@@ -13,6 +13,11 @@ const restaurantSchema = new Schema({
       },
     },
   },
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: [true, "Debes agregar un propietario"],
+  },
   address: {
     type: String,
     required: [true, "Tienes que agregar una dirección"],

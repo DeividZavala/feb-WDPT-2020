@@ -9,6 +9,7 @@ router.get("/", function (req, res, next) {
 
 router.get("/restaurants", (req, res) => {
   Restaurant.find()
+    .populate("owner")
     .then((restaurants) => {
       res.status(200).json({ restaurants });
     })

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { getCharacters } from "../../services/characterService";
 import "./navbar.css";
+import { Link } from "react-router-dom";
 
 class Nav extends Component {
   state = {
@@ -28,7 +29,7 @@ class Nav extends Component {
                 <ul className="uk-nav uk-navbar-dropdown-nav">
                   {this.state.results.map((item, index) => (
                     <li key={index} className="uk-active">
-                      <a href="#">{item.name}</a>
+                      <Link to={`/${item.id}`}>{item.name}</Link>
                     </li>
                   ))}
                 </ul>

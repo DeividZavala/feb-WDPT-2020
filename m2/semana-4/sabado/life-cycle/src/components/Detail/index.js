@@ -8,7 +8,6 @@ class Detail extends Component {
   componentDidMount() {
     const { id } = this.props.match.params;
     getCharacter(id).then((res) => {
-      console.log(res.data);
       const { data: character } = res;
       this.setState({ character });
     });
@@ -18,7 +17,6 @@ class Detail extends Component {
     if (nextProps.match.params.id !== this.props.match.params.id) {
       const { id } = nextProps.match.params;
       getCharacter(id).then((res) => {
-        console.log(res.data);
         const { data: character } = res;
         this.setState({ character });
       });
@@ -26,7 +24,12 @@ class Detail extends Component {
   }
 
   render() {
-    return <h1>{this.state.character.name}</h1>;
+    return (
+      <div>
+        <h1>{this.state.character.name}</h1>
+        <img alt={this.state.character.name} src={this.state.character.image} />
+      </div>
+    );
   }
 }
 

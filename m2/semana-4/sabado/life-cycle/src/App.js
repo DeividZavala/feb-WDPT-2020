@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import Nav from "./components/Nav";
+import Routes from "./Routes";
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
       <header>
         <Nav />
       </header>
+      <Routes />
     </div>
   );
 }

@@ -3,6 +3,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 mongoose
   .connect("mongodb://localhost/products-app", {
@@ -16,6 +17,12 @@ mongoose
   .catch((err) => console.error("Error connecting to mongo", err));
 
 const app = express();
+
+app.use(
+  cors({
+    origin: ["http://localhost:3001"],
+  })
+);
 
 app.use(logger("dev"));
 app.use(express.json());

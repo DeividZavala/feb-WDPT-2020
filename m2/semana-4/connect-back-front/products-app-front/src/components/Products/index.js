@@ -19,7 +19,7 @@ class Products extends Component {
       <section className="uk-section">
         <div className="uk-container">
           {this.state.products.length > 0 ? (
-            <div className="uk-grid">
+            <div className="uk-grid uk-grid-small uk-grid-match uk-child-width-1-3">
               {this.state.products.map((product, index) => (
                 <Card key={index} {...product} />
               ))}

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Card from "../Card";
-import { getProducts } from "../../services/productsService";
+import { getProducts, login } from "../../services/productsService";
 
 class Products extends Component {
   state = {
@@ -8,9 +8,11 @@ class Products extends Component {
   };
 
   componentDidMount() {
-    getProducts().then((res) => {
-      const { result: products } = res.data;
-      this.setState({ products });
+    login().then(() => {
+      getProducts().then((res) => {
+        const { result: products } = res.data;
+        this.setState({ products });
+      });
     });
   }
 

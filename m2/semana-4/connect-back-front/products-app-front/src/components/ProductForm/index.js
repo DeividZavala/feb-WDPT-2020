@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { createProduct } from "../../services/productsService";
 
 class ProductForm extends Component {
   state = {
@@ -13,7 +14,12 @@ class ProductForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state.product);
+    const { product } = this.state;
+    createProduct(product)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((res) => console.error(res.response));
   };
 
   render() {

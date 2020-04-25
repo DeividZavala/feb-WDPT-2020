@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
@@ -32,7 +34,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const indexRouter = require("./routes/index");
 const productsRouter = require("./routes/products");
+const authRouter = require("./routes/auth");
 app.use("/", indexRouter);
+app.use("/", authRouter);
 app.use("/products", productsRouter);
 
 module.exports = app;

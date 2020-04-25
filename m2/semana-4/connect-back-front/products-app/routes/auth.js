@@ -27,7 +27,9 @@ router.post("/login", (req, res) => {
         if (match) {
           const withoutPass = user.toObject();
           delete withoutPass.password;
-          const token = jwt.sign({ id: user._id }, process.env.SECRET);
+          const token = jwt.sign({ id: user._id }, process.env.SECRET, {
+            expiresIn: "1d",
+          });
           res
             .cookie("token", token, {
               expires: new Date(Date.now() + 86400000),

@@ -19,6 +19,11 @@ const productsSchema = new Schema(
       type: String,
       required: [true, "Debes agregar una descripcion de producto"],
     },
+    seller: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: [true, "Debes indicar quien es el vendedor"],
+    },
   },
   { timestamps: true }
 );

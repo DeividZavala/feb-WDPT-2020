@@ -14,6 +14,13 @@ const Navbar = () => (
           </li>
         </ul>
       </div>
+      <div className="uk-navbar-right">
+        <ul className="uk-navbar-nav">
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+        </ul>
+      </div>
     </nav>
   </header>
 );

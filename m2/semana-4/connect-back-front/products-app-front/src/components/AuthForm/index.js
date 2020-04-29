@@ -1,14 +1,27 @@
 import React, { Component } from "react";
+import { login, signup } from "../../services/authService";
 import { Link } from "react-router-dom";
 
 class AuthForm extends Component {
   state = {
     user: {},
+    showPassword: false,
+  };
+
+  handleShowPassword = () => {
+    const { showPassword } = this.state;
+    const showValue = !showPassword;
+    this.setState({ showPassword: showValue });
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state.user);
+    const { user } = this.state;
+    const isLogin = this.props.location.pathname === "/login";
+    const action = isLogin ? login : signup;
+    action(user).then((res) => {
+      console.log(res);
+    });
   };
 
   handleChange = (e) => {
@@ -18,6 +31,7 @@ class AuthForm extends Component {
   };
 
   render() {
+    const { showPassword } = this.state;
     const isLogin = this.props.location.pathname === "/login";
     return (
       <section className="uk-section">
@@ -60,9 +74,15 @@ class AuthForm extends Component {
                       id="password"
                       name="password"
                       className="uk-input"
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       required
                     />
+                    <button
+                      className="uk-button"
+                      onClick={this.handleShowPassword}
+                    >
+                      show password
+                    </button>
                   </div>
                 </div>
               </div>

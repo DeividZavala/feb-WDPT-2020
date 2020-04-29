@@ -1,5 +1,7 @@
 import axios from "axios";
 
+axios.defaults.withCredentials = true;
+
 export const getProducts = () => {
   return axios.get("http://localhost:3000/products");
 };

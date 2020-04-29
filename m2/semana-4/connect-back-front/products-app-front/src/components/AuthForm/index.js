@@ -16,11 +16,14 @@ class AuthForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    console.log("submit");
     const { user } = this.state;
     const isLogin = this.props.location.pathname === "/login";
     const action = isLogin ? login : signup;
     action(user).then((res) => {
-      console.log(res);
+      const { user } = res.data;
+      console.log(user);
+      localStorage.setItem("user", JSON.stringify(user));
     });
   };
 

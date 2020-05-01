@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { login, signup } from "../../services/authService";
 import { Link } from "react-router-dom";
+import AppContext from "../../AppContext";
 
 class AuthForm extends Component {
   state = {
@@ -17,11 +18,13 @@ class AuthForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const { user } = this.state;
+    const { setUser } = this.context;
     const isLogin = this.props.location.pathname === "/login";
     const action = isLogin ? login : signup;
     action(user).then((res) => {
       const { user } = res.data;
       localStorage.setItem("user", JSON.stringify(user));
+      setUser(user);
     });
   };
 
@@ -32,6 +35,7 @@ class AuthForm extends Component {
   };
 
   render() {
+    console.log(this.context);
     const { showPassword } = this.state;
     const isLogin = this.props.location.pathname === "/login";
     return (
@@ -105,5 +109,7 @@ class AuthForm extends Component {
     );
   }
 }
+
+AuthForm.contextType = AppContext;
 
 export default AuthForm;

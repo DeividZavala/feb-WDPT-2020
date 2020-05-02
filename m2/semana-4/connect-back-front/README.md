@@ -224,6 +224,28 @@ router.delete("/:id", (req, res) => {
 
 > NOTA: Cada ruta tienen las operaciones básicas que deben hacer para cada proceso ya que la lógica puede cambiar mucho para cada caso de uso.
 
+Una vez definidas las rutas, tenemos que agregarlas al archivo `app.js`:
+
+```javascript
+//app.js
+
+const authRoutes = require("./routes/auth");
+app.use("/", authRoutes);
+```
+
+> NOTA: Esta implementación generara rutas como `http://dominio.com/login`.
+
+Puedes anteceder una palabra para las rutas que los necesiten de la siguiente manera:
+
+```javascript
+//app.js
+
+const productRoutes = require("./routes/products");
+app.use("/products", productRoutes);
+```
+
+> NOTA: Esta implementación generara rutas como `http://dominio.com/products/ruta-dentro-de-products`.
+
 ---
 
 ## Auth
@@ -420,6 +442,13 @@ exports.checkRole = (roles) => {
     }
   };
 };
+```
+
+La implementación de un middleware es la siguiente:
+
+```javascript
+// routeFile.js
+router.get("/", veryToken, checkRole(["USER"]), (req, res) => {});
 ```
 
 ---

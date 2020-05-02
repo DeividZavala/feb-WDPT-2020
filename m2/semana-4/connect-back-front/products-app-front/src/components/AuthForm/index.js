@@ -19,12 +19,15 @@ class AuthForm extends Component {
     e.preventDefault();
     const { user } = this.state;
     const { setUser } = this.context;
+    const { history } = this.props;
     const isLogin = this.props.location.pathname === "/login";
     const action = isLogin ? login : signup;
+    const nextRoute = isLogin ? "/" : "/login";
     action(user).then((res) => {
       const { user } = res.data;
       localStorage.setItem("user", JSON.stringify(user));
       setUser(user);
+      history.push(nextRoute);
     });
   };
 
@@ -35,7 +38,7 @@ class AuthForm extends Component {
   };
 
   render() {
-    console.log(this.context);
+    console.log(this.props);
     const { showPassword } = this.state;
     const isLogin = this.props.location.pathname === "/login";
     return (

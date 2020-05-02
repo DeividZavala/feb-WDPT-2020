@@ -6,7 +6,7 @@ import AppContext from "./AppContext";
 
 class App extends Component {
   state = {
-    user: {},
+    user: JSON.parse(localStorage.getItem("user")) || {},
   };
 
   setUser = (user) => {

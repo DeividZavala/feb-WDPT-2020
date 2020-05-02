@@ -45,4 +45,8 @@ router.post("/login", (req, res) => {
     .catch((err) => res.status(400).json({ err }));
 });
 
+router.post("/logout", (req, res) => {
+  res.clearCookie("token").json({ msg: "logout" });
+});
+
 module.exports = router;

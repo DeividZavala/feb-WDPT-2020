@@ -3,6 +3,7 @@ import { login, signup } from "../../services/authService";
 import { Link } from "react-router-dom";
 import AppContext from "../../AppContext";
 import UIkit from "uikit";
+import Cookies from "js-cookie";
 
 class AuthForm extends Component {
   state = {
@@ -53,6 +54,7 @@ class AuthForm extends Component {
   };
 
   render() {
+    console.log(Cookies.remove("token", { path: "/", domain: "localhost" }));
     const { showPassword } = this.state;
     const isLogin = this.props.location.pathname === "/login";
     return (

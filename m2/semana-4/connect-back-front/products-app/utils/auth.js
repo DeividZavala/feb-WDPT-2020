@@ -12,3 +12,16 @@ exports.veryToken = (req, res, next) => {
     });
   });
 };
+
+exports.checkRole = (roles) => {
+  return (req, res, next) => {
+    const { role } = req.user;
+    if (roles.includes(role)) {
+      return next();
+    } else {
+      return res
+        .status(403)
+        .json({ msg: "No tienes permiso para realizar esta acción" });
+    }
+  };
+};

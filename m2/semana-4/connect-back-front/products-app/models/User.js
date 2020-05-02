@@ -18,6 +18,11 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Debes agregar una contraseña"],
     },
+    role: {
+      type: String,
+      default: "USER",
+      enum: ["ADMIN", "USER"],
+    },
   },
   { timestamps: true }
 );

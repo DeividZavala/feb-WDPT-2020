@@ -68,4 +68,28 @@ Esta parte es la primera etapa de configuración en el proyecto de backend.
 
 - Mongoose
 
+### Proceso
+
+La configuración de mongoose para conectarnos a la base de datos tiene que ir en el archivo `App.js`.
+Lo primero es importar mongoose:
+
+```javascript
+const mongoose = require("mongoose");
+```
+
+Después tienes que agregar la conexión
+
+```javascript
+mongoose
+  .connect("dirección-DB", {
+    useCreateIndex: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then((x) =>
+    console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
+  )
+  .catch((err) => console.error("Error connecting to mongo", err));
+```
+
 ---

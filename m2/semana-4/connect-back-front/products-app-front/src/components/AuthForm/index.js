@@ -2,12 +2,19 @@ import React, { Component } from "react";
 import { login, signup } from "../../services/authService";
 import { Link } from "react-router-dom";
 import AppContext from "../../AppContext";
+import UIkit from "uikit";
 
 class AuthForm extends Component {
   state = {
     user: {},
     showPassword: false,
   };
+
+  componentWillMount() {
+    const { _id } = this.context.state.user;
+    const { history } = this.props;
+    if (_id) return history.push("/");
+  }
 
   handleShowPassword = () => {
     const { showPassword } = this.state;
@@ -23,12 +30,20 @@ class AuthForm extends Component {
     const isLogin = this.props.location.pathname === "/login";
     const action = isLogin ? login : signup;
     const nextRoute = isLogin ? "/" : "/login";
-    action(user).then((res) => {
-      const { user } = res.data;
-      localStorage.setItem("user", JSON.stringify(user));
-      setUser(user);
-      history.push(nextRoute);
-    });
+    action(user)
+      .then((res) => {
+        const { user } = res.data;
+        localStorage.setItem("user", JSON.stringify(user));
+        setUser(user);
+        history.push(nextRoute);
+      })
+      .catch((err) => {
+        UIkit.notification({
+          message: `<span uk-icon='icon: close'></span> ${err.response.data.msg}`,
+          status: "danger",
+          pos: "top-right",
+        });
+      });
   };
 
   handleChange = (e) => {
@@ -38,7 +53,6 @@ class AuthForm extends Component {
   };
 
   render() {
-    console.log(this.props);
     const { showPassword } = this.state;
     const isLogin = this.props.location.pathname === "/login";
     return (

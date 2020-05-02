@@ -1,10 +1,17 @@
 import React, { Component } from "react";
 import { createProduct } from "../../services/productsService";
+import AppContext from "../../AppContext";
 
 class ProductForm extends Component {
   state = {
     product: {},
   };
+
+  componentWillMount() {
+    const { _id } = this.context.state.user;
+    const { history } = this.props;
+    if (!_id) return history.push("/login");
+  }
 
   handleChange = (e) => {
     let { product } = this.state;
@@ -101,5 +108,7 @@ class ProductForm extends Component {
     );
   }
 }
+
+ProductForm.contextType = AppContext;
 
 export default ProductForm;

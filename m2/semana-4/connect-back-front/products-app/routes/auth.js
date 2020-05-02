@@ -37,6 +37,8 @@ router.post("/login", (req, res) => {
               httpOnly: true,
             })
             .json({ user: withoutPass });
+        } else {
+          return res.status(401).json({ msg: "La contraseña es incorrecta" });
         }
       });
     })

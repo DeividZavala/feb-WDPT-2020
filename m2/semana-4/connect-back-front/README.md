@@ -10,11 +10,11 @@ La intención de este doc es que puedan tomarlo como guia para crear sus propios
 
 ### Backend
 
-1. [Conexión a Mongo]()
-1. [Modelos]()
-1. [Rutas]()
-1. [Cors]()
-1. [Middlewares]()
+1. [Conexión a Mongo](#conexión-a-mongo)
+1. [Modelos](#modelos)
+1. [Rutas](#rutas)
+1. [Cors](#cors)
+1. [Middlewares](#middlewares)
 
 ### Frontend
 
@@ -77,7 +77,7 @@ Lo primero es importar mongoose:
 const mongoose = require("mongoose");
 ```
 
-Después tienes que agregar la conexión
+Después tienes que agregar la conexión:
 
 ```javascript
 mongoose
@@ -91,5 +91,102 @@ mongoose
   )
   .catch((err) => console.error("Error connecting to mongo", err));
 ```
+
+---
+
+## Modelos
+
+En esta sección abordaremos la creación de modelos que necesitaremos para nuestra aplicación
+
+### Tecnologías
+
+- Mongoose
+
+### Proceso
+
+El primer paso es crear una carpeta `models` para poder agregar ahí todos los modelos de la aplicación, los nombres de los archivos tienen que ser con la primera letra en mayúsculas y singular `e.j. User.js`.
+
+Dentro del archivos hacemos la importación de mongoose y definicion del Schema:
+
+```javascript
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
+```
+
+otra alternativa para la importación es la siguiente:
+
+```javascript
+const { Schema, model } = require("mongoose");
+```
+
+en la forma anterior estamos sacando el Schema y el model de mongoose inmediatamente.
+
+> NOTA: Ojo en como hacen la importación, de esto dependerá el como deban usar el Schema y el model.
+
+Una vez hecha la importación, creamos la base del modelo, en este caso usare como ejemplo el modelo de Usuario:
+
+```javascript
+// User.js
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
+
+const userSchema = new Schema(
+  {
+    // propiedades de cada documento por ejemplo:
+    email: {
+      type: String,
+      required: [true, "Debes agregar un correo"],
+    },
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model("User", userSchema);
+```
+
+> NOTA: En este ejemplo estamos agregando incluso validaciones en el campo de email, es una de la muchas cosas que podemos hacer en el modelo
+
+> NOTA: Recuerden que para agregar una relación entre colecciones lo debes hacer aquí de la siguiente manera:
+
+```javascript
+// OtherModel.js
+{
+    //...propiedades del schema
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    }
+}
+```
+
+---
+
+## Rutas
+
+### Tecnologías
+
+- Mongoose
+
+### Proceso
+
+---
+
+## Cors
+
+### Tecnologías
+
+- Mongoose
+
+### Proceso
+
+---
+
+## Middleware
+
+### Tecnologías
+
+- Mongoose
+
+### Proceso
 
 ---

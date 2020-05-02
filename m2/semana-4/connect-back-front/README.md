@@ -163,11 +163,61 @@ module.exports = mongoose.model("User", userSchema);
 
 ## Rutas
 
+Las rutas son una del las partes más importantes de nuestra aplicación, es el lugar donde se va a definir que es lo que podemos hacer en la aplicación y donde hacer las peticiones para que esas cosas pacen.
+
 ### Tecnologías
 
-- Mongoose
+- Express router
 
 ### Proceso
+
+Lo primero que debemos hacer es crear el archivo donde vamos a definir las rutas, esto lo hacemos en la carpeta de `routes` que ya esta en nuestra aplicación.
+
+Para este ejemplo usaremos como base un modelo de productos como lo que hicimos en esta aplicación.
+
+Creamos el archivo `products.js` dentro de la carpeta `routes` y agregaremos 4 rutas que nos permitiran hacer el `CRUD` completo.
+
+```javascript
+const express = require("express");
+const router = express.Router();
+//Modelo
+const Product = require("rutas-hasta-modelo");
+
+// GET de todos los productos
+router.get("/", (req, res) => {
+  Product.find()
+    .then((products) => {
+      res.status(200).json({ result: products });
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+});
+// GET de un solo producto
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+  Product.findById(id);
+});
+
+// CREATE un producto
+router.post("/", (req, res) => {
+  Product.create(req.body);
+});
+
+// UPDATE de un producto
+router.patch("/:id", (req, res) => {
+  const { id } = req.params;
+  Product.findByIdAndUpdate(id, req.body, { new: true });
+});
+
+// DELETE de un producto
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  Product.findByIdAndDelete(id);
+});
+```
+
+> NOTA: Cada ruta tienen las operaciones básicas que deben hacer para cada proceso ya que la lógica puede cambiar mucho para cada caso de uso.
 
 ---
 

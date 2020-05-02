@@ -70,7 +70,7 @@ Esta parte es la primera etapa de configuración en el proyecto de backend.
 
 ### Proceso
 
-La configuración de mongoose para conectarnos a la base de datos tiene que ir en el archivo `App.js`.
+La configuración de mongoose para conectarnos a la base de datos tiene que ir en el archivo `app.js`.
 Lo primero es importar mongoose:
 
 ```javascript
@@ -193,6 +193,7 @@ router.get("/", (req, res) => {
       res.status(400).json(err);
     });
 });
+
 // GET de un solo producto
 router.get("/:id", (req, res) => {
   const { id } = req.params;
@@ -223,20 +224,80 @@ router.delete("/:id", (req, res) => {
 
 ## Cors
 
+Los cors nos va a permitir resguardar nuestro backend de peticiones cuyo origen sea desconocido, de esta manera podemos controlar a quien le entregamos información y de quien la recibimos.
+
 ### Tecnologías
 
-- Mongoose
+- Cors (paquete npm)
 
 ### Proceso
+
+Lo primero es instalar el paquete via npm:
+
+```shell
+$ npm i cors
+```
+
+Una vez instalado, la configuración se agrega en el `app.js`
+
+```javascript
+//app.js
+
+const cors = require("cors");
+
+app.use(
+  cors({
+    // origenes permitidos
+    origin: ["http://localhost:3001"],
+    credentials: true,
+  })
+);
+```
 
 ---
 
 ## Middleware
 
+Los middleware son funciones, nos permiten hacer validaciones o tratar información previo al controlador donde esta la lógica final que se ejecuta en cada ruta.
+
 ### Tecnologías
 
-- Mongoose
+- express router
+- JSON web token (si aplica)
 
 ### Proceso
+
+La creación de los middlewares puede hacerse en una carpeta llamada `utils`, dentro de esta carpeta vamos a crear un archivo `auth.js` para los middlewares que usaremos en la validación de token y permisos en cada ruta como lo hicimos en la aplicación.
+
+```javascript
+//utils/auth.js
+
+const jwt = require("jsonwebtoken");
+const User = require("../models/User");
+
+exports.veryToken = (req, res, next) => {
+  const { token } = req.cookies;
+  jwt.verify(token, process.env.SECRET, (error, decoded) => {
+    if (error) return res.status(401).json({ error });
+    User.findById(decoded.id).then((user) => {
+      req.user = user;
+      next();
+    });
+  });
+};
+
+exports.checkRole = (roles) => {
+  return (req, res, next) => {
+    const { role } = req.user;
+    if (roles.includes(role)) {
+      return next();
+    } else {
+      return res
+        .status(403)
+        .json({ msg: "No tienes permiso para realizar esta acción" });
+    }
+  };
+};
+```
 
 ---

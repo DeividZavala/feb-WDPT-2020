@@ -6,11 +6,11 @@ La intención de este doc es que puedan tomarlo como guia para crear sus propios
 
 ### Creación de proyectos
 
-1. [Comandos]()
+1. [Comandos](#creación-de-proyectos)
 
 ### Backend
 
-1. [Conexión a Mongo](#creacion-de-proyectos)
+1. [Conexión a Mongo]()
 1. [Modelos]()
 1. [Rutas]()
 1. [Cors]()

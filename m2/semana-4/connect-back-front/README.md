@@ -13,15 +13,19 @@ La intención de este doc es que puedan tomarlo como guia para crear sus propios
 1. [Conexión a Mongo](#conexión-a-mongo)
 1. [Modelos](#modelos)
 1. [Rutas](#rutas)
+1. [Auth](#Auth)
+   - [Login](#login)
+   - [Signup](#signup)
+   - [Logout](#logout)
 1. [Cors](#cors)
 1. [Middlewares](#middlewares)
 
 ### Frontend
 
-1. [Code Review]()
-1. [Pull Requests]()
-1. [Growth]()
-1. [Events]()
+1. [Router]()
+1. [Context]()
+1. [Formularios]()
+1. [Protección de rutas]()
 
 ## Creación de proyectos
 
@@ -222,6 +226,124 @@ router.delete("/:id", (req, res) => {
 
 ---
 
+## Auth
+
+El proceso de autentificación es una de las piezas fundamentales de una aplicación, consta de 3 piezas para nuestro caso de uso.
+
+- Login
+- Signup
+- Logout
+
+### Tecnologías
+
+- JSON web token (si aplica)
+- bcrypt
+- dotenv (variables de entorno)
+
+### Proceso
+
+Para el correcto funcionamiento del proceso del login necesitamos hacer uso de `variables de entorno` que son una forma de esconder información sensible.
+
+Para usarlas debemos instalar una herramienta que se llama `dotenv`.
+
+Instalando el paquete:
+
+```shell
+$ npm i dotenv
+```
+
+Configuración:
+
+```javascript
+// app.js
+// linea 1 del archivo
+require("dotenv").config();
+```
+
+Para la implementación es necesario crear un archivo `.env` a la misma altura que tu archivo `.gitignore`
+
+Implementación (.env):
+
+```
+SECRET=tuvariable
+```
+
+#### Signup
+
+El primer proceso en el cual deberiamos de pensar es el alta de un nuevo usuario, es un proceso simple que conta de 2 partes, crear una contraseña oculta y crear el documento del usuario con esa contraseña oculta.
+
+```javascript
+const { email, password } = req.body;
+// creamos la contraseña hasheada
+bcrypt.hash(password, 10).then((hashedPassword) => {
+  const user = { email, password: hashedPassword };
+  // creamos al usuario
+  User.create(user)
+    .then(() => {
+      res.status(201).json({ msg: "Usuario creado con éxto" });
+    })
+    .catch((err) => res.status(400).json(err));
+});
+```
+
+#### Login
+
+Para el login implementaremos uno de los procesos más empleados hoy día, el `token` donde almacenaremos el id del usuario que esta interactuando con nuestra aplicación para poder acceder a toda su información, el proceso es simple.
+
+Todo el proceso se llevará acabo en las rutas de `auth.js` archivos que tenemos que crear previamente.
+
+Una vez creada la ruta, lo que haremos es encotrar al usuario con base en el mail que se proporciona en front, si el usuario no se encuetra debemos indicarlo, mandando una respuesta al front indicando que el email es incorrecto, `el feedback para el usuario y el front es muy importante`.
+
+En caso de que el usuario sea encontrado ahora debemos checar que las contraseñas sean correctas, eso lo hacemos comparando el `password` que se envia de front con el `hash` que tenemos almacenado en la base de datos, si coincide entonces creamos el token y lo mandamos al frontend dentro de una `cookie`, de lo contrario mandamos el error.
+
+```javascript
+const { email, password } = req.body;
+// buscamos al usuario
+User.findOne({ email })
+  .then((user) => {
+    if (user === null) return res.status(404).json({ msg: "Email no existe" });
+
+    bcrypt.compare(password, user.password).then((match) => {
+      if (match) {
+        // convertimos el usuario en un objeto plano de javascript y quitamos la contraseña del objeto
+        const withoutPass = user.toObject();
+        delete withoutPass.password;
+        const token = jwt.sign(
+          { id: user._id },
+          //llave secreta con la que se genera el token (variable de entorno)
+          process.env.SECRET,
+          {
+            // expiración del token en 1 dia
+            expiresIn: "1d",
+          }
+        );
+        // creamos la cookie
+        res
+          .cookie("token", token, {
+            // expiración de la cookie en un dia
+            expires: new Date(Date.now() + 86400000),
+            secure: false,
+            httpOnly: true,
+          })
+          .json({ user: withoutPass });
+      } else {
+        return res.status(401).json({ msg: "La contraseña es incorrecta" });
+      }
+    });
+  })
+  .catch((err) => res.status(400).json({ err }));
+```
+
+#### Logout
+
+El proceso de logout es el más simple de los 3, ya que este lo único que require es mandar una instrucción al navegador para que elimine la cookie que tiene el token.
+
+```javascript
+res.clearCookie("token").json({ msg: "logout" });
+```
+
+---
+
 ## Cors
 
 Los cors nos va a permitir resguardar nuestro backend de peticiones cuyo origen sea desconocido, de esta manera podemos controlar a quien le entregamos información y de quien la recibimos.
@@ -256,7 +378,7 @@ app.use(
 
 ---
 
-## Middleware
+## Middlewares
 
 Los middleware son funciones, nos permiten hacer validaciones o tratar información previo al controlador donde esta la lógica final que se ejecuta en cada ruta.
 

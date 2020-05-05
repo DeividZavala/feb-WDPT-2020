@@ -624,6 +624,38 @@ const NavBar () => (
 )
 ```
 
+Hay casos de uso donde podemos necesitar información o metodos fuera del render por lo que el `Consumer` ya no nos sirve, la manera de hacerlo es asignando el context a una propiedad de la clase que se llama `contextType`.
+
+```javascript
+class MyClass extends React.Component {
+  componentDidMount() {
+    let value = this.context;
+    /* realiza un efecto secundario en el montaje utilizando el valor de MyContext */
+  }
+  render() {
+    let value = this.context;
+    /* renderiza algo basado en el valor de MyContext */
+  }
+}
+MyClass.contextType = MyContext;
+```
+
+La otra manera en la que lo podemos hacer es la siguiente:
+
+```javascript
+class MyClass extends React.Component {
+  static contextType = MyContext;
+  componentDidMount() {
+    let value = this.context;
+    /* realiza un efecto secundario en el montaje utilizando el valor de MyContext */
+  }
+  render() {
+    let value = this.context;
+    /* renderiza algo basado en el valor */
+  }
+}
+```
+
 ---
 
 ## Servicios

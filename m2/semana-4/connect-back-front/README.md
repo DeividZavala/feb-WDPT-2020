@@ -23,7 +23,7 @@ La intención de este doc es que puedan tomarlo como guia para crear sus propios
 ### Frontend
 
 1. [Router](#router)
-1. [Context]()
+1. [Context](#context)
 1. [Formularios]()
 1. [Protección de rutas]()
 
@@ -531,6 +531,81 @@ export default App;
 import { Link } from "react-router-dom";
 
 <Link to="path">Home</Link>;
+```
+
+---
+
+## Context
+
+Muchas veces en un nuestras plataformas tenemos la necidas de compartir información entre componentes que no estan relacionados deforma directa entre si, es aqui donde `Context` entra en juego, siendo una herramienta que nos permite exponer información a los componentes de mi aplicación así mismo como conectarse y consumir esa data.
+
+## Tecnologías
+
+- React Context
+
+## Proceso
+
+Recordemos que `Context` ya forma parte de react por lo que no es necesario que instalemos nada.
+
+Lo primero que tenemos que hacer es crear un archivo donde crearemos el context, para este ejemplo; `AppContext.js`.
+
+```javascript
+//AppContext.js
+
+import { createContext } from "react";
+
+const AppContext = createContext();
+
+export default AppContext;
+```
+
+Ahora app context no brinda 2 componentes, el `Provider` y el `Consumer`.
+
+El `Provider` nos permitirá exponer la data para que sea consumida por toda la aplicación.
+
+El `Consumer` nos permitirá conectar los componentes que lo necesiten para consuman esa información.
+
+Una vez hecho esto es común que el provider se agregue en el componente principal de la aplicación, para fines prácticos usaremos el context en el componente de `App.js`.
+
+```javascript
+// App.js
+import React, { Component } from "react";
+import AppContext from "path/context";
+
+class App extends Component {
+  state = {
+    user: {},
+  };
+  render() {
+    return (
+      <AppContext.Provider value={{ state }}>
+        {/** resto de jsx y componentes **/}
+      </AppContext.Provider>
+    );
+  }
+}
+```
+
+> NOTA: Recordemos que todo lo que pongamos dentro del prop `value` es lo que podemos tomar y usar del `context`.
+
+Para consumir la data usaremos el `Consumer`, supongamos que tenemos un componente `NavBar` y que queremos usar la data del `context` ahí.
+
+```javascript
+// NavBar.js
+
+import React from 'react'
+import { AppContext } from "path/context";
+
+const NavBar () => (
+    <AppContext.Consumer>
+        {value => {
+            // value es igual a lo mandemos en el prop value del Provider
+            return (
+                {/*JSX con acceso a la data*/}
+            )
+        }}
+    </AppContext.Consumer>
+)
 ```
 
 ---

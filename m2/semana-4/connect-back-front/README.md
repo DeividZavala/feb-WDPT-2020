@@ -24,6 +24,7 @@ La intención de este doc es que puedan tomarlo como guia para crear sus propios
 
 1. [Router](#router)
 1. [Context](#context)
+1. [Servicios](#servicios)
 1. [Formularios]()
 1. [Protección de rutas]()
 
@@ -607,5 +608,38 @@ const NavBar () => (
     </AppContext.Consumer>
 )
 ```
+
+---
+
+## Servicios
+
+Los servicios nos van a permitir reutilizar funcionalidad en distintos lugares de nuestra aplicación, en este caso los vamos a usar para mandar información al servidor o pedirla.
+
+## Tecnologías
+
+- axios
+
+## Proceso
+
+Lo primero que tenemos que hacer es instalar `axios`
+
+```shell
+$ yarn add axios
+```
+
+Una vez hecho esto lo siguiente es crear un archivo para estos servicios, para el ejemplo `authServices.js`.
+
+```javascript
+// authServices.js
+import axios from "axios";
+
+axios.default.withCredentials = true;
+
+export const login = (credentials) => {
+  return axios.post("http://localhost:3000/login", credentials);
+};
+```
+
+> NOTA: La linea `axios.default.withCredentials = true` nos permite recibir y mandar las cookies en la peticiones.
 
 ---

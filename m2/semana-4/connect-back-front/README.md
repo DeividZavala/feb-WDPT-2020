@@ -25,7 +25,7 @@ La intención de este doc es que puedan tomarlo como guia para crear sus propios
 1. [Router](#router)
 1. [Context](#context)
 1. [Servicios](#servicios)
-1. [Formularios]()
+1. [Formularios](#formularios)
 1. [Protección de rutas]()
 
 ## Creación de proyectos
@@ -641,5 +641,101 @@ export const login = (credentials) => {
 ```
 
 > NOTA: La linea `axios.default.withCredentials = true` nos permite recibir y mandar las cookies en la peticiones.
+
+---
+
+## Formularios
+
+Manejar formulario es indispensable para poder hacer procemos como el login o signup en nuestra aplicación así como crear o editar elementos.
+
+## Tecnologías
+
+- React
+
+## Proceso
+
+El manejo de formularios es simple tenemos que tener presentes 2 eventos que suceden en el navegador, el `submit` y `change`, el primero se ejecuta cuando damos click en el botón de enviar dentro del formulario y el segundo lo vamos a usar cuando un input tienen algún cambio, específicamente, cuando el usuario ingresa información.
+
+Vamos a considerar un componente que tienen el fomulario de login:
+
+```javascript
+import React, { Component } from "react";
+
+class LoginForm extends Component {
+  state = {
+    user: {},
+  };
+
+  handleSubmit = () => {};
+
+  handleChange = () => {};
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <input onChange={this.handleChange} type="email" name="email" />
+        <input onChange={this.handleChange} type="password" name="password" />
+        <button>Login</button>
+      </form>
+    );
+  }
+}
+```
+
+Notemos que dentro del js tenemos 2 eventos de react, el `onSubmit` y el `onChange` que se encuentran en la etiqueta `form` y las etiquetas `input` respectivamente, cada uno de estos eventos esta asociado con la función que será ejecutada cuando ocurran.
+
+Primero veamos el `onChange`, en esta función es donde vamos a tomar la información del `input`, para esto el `name` que le demos al `input` juega un papel importante en el proceso.
+
+```javascript
+handleChange = (e) => {
+  let { user } = this.state;
+  user = { ...user, [e.target.name]: e.target.value };
+  this.setState({ user });
+};
+```
+
+El segundo método es `handleSubmit`, este evento lo que hará es ejecutar nuestro servicio y mandar la información al servidor.
+
+```javascript
+handleSubmit = (e) => {
+  // usamos e.preventDefault para evitar que el sitio se recargue
+  e.preventDefault();
+  login();
+};
+```
+
+Finalmente nuestro componente queda así
+
+```javascript
+import React, { Component } from "react";
+
+class LoginForm extends Component {
+  state = {
+    user: {},
+  };
+
+  handleSubmit = (e) => {
+    // usamos e.preventDefault para evitar que el sitio se recargue
+    e.preventDefault();
+    login();
+  };
+
+  handleChange = (e) => {
+    let { user } = this.state;
+    user = { ...user, [e.target.name]: e.target.value };
+    this.setState({ user });
+  };
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <input onChange={this.handleChange} type="email" name="email" />
+        <input onChange={this.handleChange} type="password" name="password" />
+        <button>Login</button>
+      </form>
+    );
+  }
+}
+```
 
 ---

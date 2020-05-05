@@ -22,7 +22,7 @@ La intención de este doc es que puedan tomarlo como guia para crear sus propios
 
 ### Frontend
 
-1. [Router]()
+1. [Router](#router)
 1. [Context]()
 1. [Formularios]()
 1. [Protección de rutas]()
@@ -63,6 +63,8 @@ $ npx create-react-app nombre-del-proyecto
 En caso del frontend esto es todo lo que tenemos que hacer ya el `create-react-app` crea los archivos necesario y también instala los paquetes necesarios para correr la aplicación.
 
 ---
+
+# Backend
 
 ## Conexión a Mongo
 
@@ -449,6 +451,86 @@ La implementación de un middleware es la siguiente:
 ```javascript
 // routeFile.js
 router.get("/", veryToken, checkRole(["USER"]), (req, res) => {});
+```
+
+---
+
+# Frontend
+
+## Router
+
+El router es una de las herramientas más importantes en la aplicación, debemos recordar que en el frontends estamos trabajando con una single page application, esto quiere decir que no vamos a cambiar de sección en si, si no que vamos a estar en una sola página de la aplicación pero mostrando componentes diferentes. [docs](https://medium.com/@programacionjje/que-es-spa-single-page-application-4dbd3694fac9)
+
+## Tecnologías
+
+- React router dom
+
+## Proceso
+
+Lo primero que tenemos que hacer es la instalación del `react-router-dom`.
+
+```shell
+$ npm i react-router-dom
+```
+
+Después de la instalación comenzaremos con las configuración, lo primero es agregar el componente de `BrowserRouter` en el archivo `index.js`.
+
+Este componente nos da acceso al API de historia de HTML5 para mantener nuestra interfaz gráfica en sincronía con la locación actual o URL.
+
+Se usa de esta manera:
+
+```javascript
+// index.js
+
+import { BrowserRouter } from "react-router-dom";
+
+const WithRouter = () => (
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
+
+ReactDOM.render(<WithRouter />, document.getElementById("app"));
+```
+
+Una vez hecho esto el siguiente paso es definir las rutas que se usaran en la aplicación.
+
+Para esto crearemos un archivo `Router.js` donde haremos la definición de estas rutas, usaremos 2 componentes `Switch` y `Route`.
+
+```javascript
+// Router.js
+import { Switch, Route } from "react-router-dom";
+import UnComponente from "ruta-al-componente";
+
+const Router = () => (
+  <Switch>
+    <Route exact path="ruta" component={UnComponente} />
+  </Switch>
+);
+
+export default Router;
+```
+
+Como tercer y último paso solo hace falta hacer uso del componente `Router` donde queramos que los componentes se muestren, usualmente el componente `App`
+
+```javascript
+import Router from "path/router";
+
+const App = () => (
+  <div>
+    <Router />
+  </div>
+);
+
+export default App;
+```
+
+> Nota: Recuerda que para cambiar de ruta tienes que usar el componente `Link`
+
+```javascript
+import { Link } from "react-router-dom";
+
+<Link to="path">Home</Link>;
 ```
 
 ---

@@ -26,7 +26,7 @@ La intención de este doc es que puedan tomarlo como guia para crear sus propios
 1. [Context](#context)
 1. [Servicios](#servicios)
 1. [Formularios](#formularios)
-1. [Protección de rutas]()
+1. [Protección de rutas](#protección-de-rutas)
 
 ## Creación de proyectos
 
@@ -739,3 +739,29 @@ class LoginForm extends Component {
 ```
 
 ---
+
+## Protección de rutas
+
+La protección de rutas es necesaria en las aplicaciones para controlar el acceso a ciertas secciones de nuestra aplicación.
+
+## Tecnologías
+
+- React
+
+## Proceso
+
+Para proteger una ruta necesitamos primero estar en un componente que usemos en una ruta, dentro del componente haremos uso de una función de ciclo de vida de React, el `componentWillMount`.
+
+Dentro de esta función podemos hacer 2 validaciones como por ejemplo si hay un usuario logueado o si tiene permisos para estar en esa ruta.
+
+```javascript
+componentWillMount() {
+    const { _id, role } = this.context.state.user;
+    const { history } = this.props;
+    const hasPermission = ["ADMIN"].includes(role);
+    if (!_id) return history.push("/login");
+    if (!hasPermission) return history.push("/");
+  }
+```
+
+> NOTA: En este ejemplo estamos sacando el `_id` y el `role` del context y estamos usando el history que nos provee el react-router-dom.

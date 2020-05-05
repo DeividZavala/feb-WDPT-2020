@@ -526,12 +526,27 @@ const App = () => (
 export default App;
 ```
 
-> Nota: Recuerda que para cambiar de ruta tienes que usar el componente `Link`
+> NOTA: Recuerda que para cambiar de ruta tienes que usar el componente `Link`
 
 ```javascript
 import { Link } from "react-router-dom";
 
 <Link to="path">Home</Link>;
+```
+
+> NOTA: Recuerda que si un componente no se usa dentro del componente `Router.js` tienes que usar las función `withRouter` del `react-router`
+
+```javascript
+import React, { Component } from "react";
+import { withRouter } from "react-router";
+
+class App extends Component {
+  render() {}
+}
+
+const AppWithRouter = withRouter(App);
+
+export default AppWithRouter;
 ```
 
 ---

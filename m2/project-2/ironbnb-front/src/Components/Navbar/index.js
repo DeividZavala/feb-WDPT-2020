@@ -29,6 +29,7 @@ const Navbar = ({ user, logout }) => {
                         className="uk-border-circle"
                         width="40"
                         height="40"
+                        alt={user.name}
                         src={user.profile_picture}
                       />
                     </div>

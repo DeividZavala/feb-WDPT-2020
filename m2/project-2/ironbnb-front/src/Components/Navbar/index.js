@@ -1,9 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
-  const user = {};
-  const logout = () => {};
+const Navbar = ({ user, logout }) => {
   return (
     <header>
       <nav className="uk-navbar-container" uk-navbar="true">
@@ -31,13 +29,11 @@ const Navbar = () => {
                         className="uk-border-circle"
                         width="40"
                         height="40"
-                        src="images/avatar.jpg"
+                        src={user.profile_picture}
                       />
                     </div>
                     <div className="uk-width-expand">
-                      <div className="uk-card-title uk-margin-remove-bottom">
-                        {user.name}
-                      </div>
+                      <div className="uk-margin-remove-bottom">{user.name}</div>
                     </div>
                   </div>
                 </Link>

@@ -50,10 +50,29 @@ router.get("/:id", (req, res) => {
     .catch((err) => res.status(400).json(err));
 });
 
+// Create reservation
 router.post("/", (req, res) => {
   // const { _id: guest } = req.user;
   const reservation = { ...req.body, guest: "5eb220f38621bd305624f7dc" };
   Reservation.create(reservation)
+    .then((reservation) => {
+      res.status(200).json({ result: reservation });
+    })
+    .catch((err) => res.status(400).json(err));
+});
+
+router.patch("/:id", (req, res) => {
+  const { id } = req.params;
+  Reservation.findByIdAndUpdate(id, req.body, { new: true })
+    .then((reservation) => {
+      res.status(200).json({ result: reservation });
+    })
+    .catch((err) => res.status(400).json(err));
+});
+
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  Reservation.findOneAndDelete(id)
     .then((reservation) => {
       res.status(200).json({ result: reservation });
     })

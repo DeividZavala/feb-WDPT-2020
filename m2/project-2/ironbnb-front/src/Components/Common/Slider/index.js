@@ -7,8 +7,8 @@ const Slider = ({ images }) => (
   >
     <ul className="uk-slideshow-items">
       {images.map((image, index) => (
-        <li>
-          <img key={index} src={image} alt="" uk-cover="true" />
+        <li key={index}>
+          <img src={image} alt="" uk-cover="true" />
         </li>
       ))}
     </ul>
@@ -29,7 +29,7 @@ const Slider = ({ images }) => (
     <div className="uk-position-bottom-center uk-position-small">
       <ul className="uk-dotnav">
         {images.map((image, index) => (
-          <li uk-slideshow-item={index}>
+          <li key={index} uk-slideshow-item={index}>
             <a href="#">Item 1</a>
           </li>
         ))}

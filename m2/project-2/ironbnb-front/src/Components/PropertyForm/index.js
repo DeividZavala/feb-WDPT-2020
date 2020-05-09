@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import InputField from "../Common/InputField";
 import TextAreaField from "../Common/TextAreaField";
+import { createProperty } from "../../services/propertyServices";
+import UIkit from "uikit";
 
 class PropertyForm extends Component {
   state = {
@@ -16,7 +18,25 @@ class PropertyForm extends Component {
     property = { ...property, [e.target.name]: e.target.value.split(",") };
     this.setState({ property });
   };
-  handleSubmit = () => {};
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const { property } = this.state;
+    createProperty(property)
+      .then((res) => {
+        const { result } = res.data;
+        console.log(result);
+      })
+      .catch((err) => {
+        const errors = Object.values(err.response.data.errors);
+        errors.map((error) =>
+          UIkit.notification({
+            message: `<span uk-icon='icon: close'></span> ${error.message}`,
+            status: "danger",
+            pos: "top-right",
+          })
+        );
+      });
+  };
   render() {
     console.log(this.state.property);
     return (

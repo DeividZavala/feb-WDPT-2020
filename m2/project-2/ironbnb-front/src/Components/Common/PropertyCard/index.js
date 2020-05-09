@@ -40,7 +40,10 @@ const PropertyCard = ({
             </div>
             {isOwner ? (
               <div>
-                <Link href="#" class="uk-button uk-button-text">
+                <Link
+                  to={`/property/${_id}`}
+                  className="uk-button uk-button-text"
+                >
                   Editar
                 </Link>
               </div>

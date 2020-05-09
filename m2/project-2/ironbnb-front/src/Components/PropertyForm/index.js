@@ -56,7 +56,7 @@ class PropertyForm extends Component {
               handleImagesChange={this.handleImagesChange}
             />
             <div>
-              <PropertyCard {...property} withHeader={false} />
+              <PropertyCard {...property} isDemo={true} />
             </div>
           </div>
         </div>

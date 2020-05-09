@@ -16,13 +16,13 @@ const PropertyCard = ({
   createdAt,
   owner,
   userId,
-  withHeader = true,
+  isDemo = false,
 }) => {
   const isOwner = userId === owner?._id;
   return (
     <div>
       <div className="uk-card uk-card-default">
-        {withHeader ? (
+        {!isDemo ? (
           <div className="uk-card-header uk-padding-small">
             <div className="uk-grid-small uk-flex-middle" uk-grid="true">
               <div className="uk-width-auto">
@@ -70,7 +70,9 @@ const PropertyCard = ({
           <div>Creada {dayjs(createdAt).locale("es").fromNow()}</div>
           <p>{description}</p>
           <div className="uk-text-center">
-            <button className="uk-button uk-button-primary">Reservar</button>
+            <button disabled={isDemo} className="uk-button uk-button-primary">
+              Reservar
+            </button>
           </div>
         </div>
       </div>

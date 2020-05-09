@@ -3,6 +3,7 @@ import Slider from "../Slider";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Link } from "react-router-dom";
+import ReservationModal from "../ReservationModal";
 import "dayjs/locale/es";
 dayjs.extend(relativeTime);
 
@@ -20,7 +21,8 @@ const PropertyCard = ({
 }) => {
   const isOwner = userId === owner?._id;
   return (
-    <div>
+    <div className="uk-margin-small-bottom">
+      <ReservationModal title={title} property={_id} />
       <div className="uk-card uk-card-default">
         {!isDemo ? (
           <div className="uk-card-header uk-padding-small">
@@ -70,7 +72,11 @@ const PropertyCard = ({
           <div>Creada {dayjs(createdAt).locale("es").fromNow()}</div>
           <p>{description}</p>
           <div className="uk-text-center">
-            <button disabled={isDemo} className="uk-button uk-button-primary">
+            <button
+              disabled={isDemo}
+              className="uk-button uk-button-primary"
+              uk-toggle={`target: #reservate-${_id}`}
+            >
               Reservar
             </button>
           </div>

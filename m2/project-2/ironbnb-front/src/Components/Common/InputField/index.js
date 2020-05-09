@@ -1,6 +1,12 @@
 import React from "react";
 
-const InputField = ({ name, type = "text", handleChange, placeholder }) => (
+const InputField = ({
+  name,
+  type = "text",
+  handleChange,
+  placeholder,
+  ...props
+}) => (
   <div className="uk-margin">
     <label className="uk-form-label uk-text-capitalize" htmlFor={name}>
       {name}:
@@ -13,6 +19,7 @@ const InputField = ({ name, type = "text", handleChange, placeholder }) => (
         id={name}
         type={type}
         placeholder={placeholder}
+        {...props}
       />
     </div>
   </div>

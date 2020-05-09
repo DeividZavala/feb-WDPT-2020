@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import InputField from "../Common/InputField";
-import TextAreaField from "../Common/TextAreaField";
 import { createProperty } from "../../services/propertyServices";
-import UIkit from "uikit";
 import AppContext from "../../AppContext";
+import PropertyCard from "../Common/PropertyCard";
+import Form from "./Form";
+import UIkit from "uikit";
 
 class PropertyForm extends Component {
   static contextType = AppContext;
@@ -43,47 +43,21 @@ class PropertyForm extends Component {
       });
   };
   render() {
-    console.log(this.state.property);
-    const { description = "" } = this.state.property;
+    const { property } = this.state;
     return (
       <section className="uk-section">
-        <div className="uk-container uk-flex uk-flex-center">
-          <div className="uk-width-1-2">
-            <form className="uk-width-1-1" onSubmit={this.handleSubmit}>
-              <InputField
-                name="title"
-                placeholder="property name"
-                handleChange={this.handleChange}
-              />
-              <InputField
-                name="price"
-                placeholder="price per night"
-                handleChange={this.handleChange}
-              />
-              <InputField
-                name="address"
-                placeholder="property address"
-                handleChange={this.handleChange}
-              />
-              <InputField
-                name="capacity"
-                placeholder="property capacity"
-                handleChange={this.handleChange}
-              />
-              <TextAreaField
-                name="description"
-                hint={`${description.length}/50`}
-                handleChange={this.handleChange}
-              />
-              <TextAreaField
-                name="images"
-                handleChange={this.handleImagesChange}
-                hint="separate multiple images by commas"
-              />
-              <button type="submit" className="uk-button uk-button-primary">
-                Create property
-              </button>
-            </form>
+        <div className="uk-container">
+          <h3>Create property</h3>
+          <div className="uk-grid uk-child-width-1-2">
+            <Form
+              property={property}
+              handleChange={this.handleChange}
+              handleSubmit={this.handleSubmit}
+              handleImagesChange={this.handleImagesChange}
+            />
+            <div>
+              <PropertyCard {...property} withHeader={false} />
+            </div>
           </div>
         </div>
       </section>

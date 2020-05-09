@@ -8,7 +8,7 @@ dayjs.extend(relativeTime);
 
 const PropertyCard = ({
   _id,
-  images,
+  images = [],
   title,
   description,
   price,
@@ -16,40 +16,43 @@ const PropertyCard = ({
   createdAt,
   owner,
   userId,
+  withHeader = true,
 }) => {
-  const isOwner = userId === owner._id;
+  const isOwner = userId === owner?._id;
   return (
     <div>
       <div className="uk-card uk-card-default">
-        <div className="uk-card-header uk-padding-small">
-          <div className="uk-grid-small uk-flex-middle" uk-grid="true">
-            <div className="uk-width-auto">
-              <img
-                className="uk-border-circle"
-                width="40"
-                height="40"
-                alt={owner.name}
-                src={owner.profile_picture}
-              />
-            </div>
-            <div className="uk-width-expand">
-              <h3 className="uk-card-title uk-margin-remove-bottom">
-                {owner.name}
-              </h3>
-              <p className="uk-text-meta uk-margin-remove-top">Propietario</p>
-            </div>
-            {isOwner ? (
-              <div>
-                <Link
-                  to={`/property/${_id}`}
-                  className="uk-button uk-button-text"
-                >
-                  Editar
-                </Link>
+        {withHeader ? (
+          <div className="uk-card-header uk-padding-small">
+            <div className="uk-grid-small uk-flex-middle" uk-grid="true">
+              <div className="uk-width-auto">
+                <img
+                  className="uk-border-circle"
+                  width="40"
+                  height="40"
+                  alt={owner?.name}
+                  src={owner?.profile_picture}
+                />
               </div>
-            ) : null}
+              <div className="uk-width-expand">
+                <h3 className="uk-card-title uk-margin-remove-bottom">
+                  {owner?.name}
+                </h3>
+                <p className="uk-text-meta uk-margin-remove-top">Propietario</p>
+              </div>
+              {isOwner ? (
+                <div>
+                  <Link
+                    to={`/property/${_id}`}
+                    className="uk-button uk-button-text"
+                  >
+                    Editar
+                  </Link>
+                </div>
+              ) : null}
+            </div>
           </div>
-        </div>
+        ) : null}
         <div className="uk-card-media-top">
           <Slider images={images} />
         </div>

@@ -13,7 +13,7 @@ const Navbar = ({ user, logout }) => {
               </li>
 
               <li>
-                <Link to="/new">New Property</Link>
+                <Link to="/property/new">New Property</Link>
               </li>
             </ul>
           </div>

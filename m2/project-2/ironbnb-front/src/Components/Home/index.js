@@ -17,13 +17,13 @@ class Home extends Component {
   }
 
   render() {
-    const { properties } = this.context.state;
+    const { properties, user } = this.context.state;
     return (
       <div className="uk-section">
         <div className="uk-container">
           <div className="uk-grid uk-grid-small uk-grid-match uk-child-width-1-3@l  uk-child-width-1-3@m uk-child-width-1-1@s">
             {properties.map((property, index) => (
-              <PropertyCard key={index} {...property} />
+              <PropertyCard key={index} {...property} userId={user._id} />
             ))}
           </div>
         </div>

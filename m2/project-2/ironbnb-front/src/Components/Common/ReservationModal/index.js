@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import InputField from "../InputField";
 import { createReservation } from "../../../services/reservationServices";
+import { buildNotification } from "../../../utils/notification";
 
 class ReservationModal extends Component {
   state = {
@@ -16,10 +17,14 @@ class ReservationModal extends Component {
   handleSubmit = () => {
     const { reservation } = this.state;
     const { property } = this.props;
-    createReservation({ ...reservation, property }).then((res) => {
-      //const {}
-      console.log(res.data);
-    });
+    createReservation({ ...reservation, property })
+      .then((res) => {
+        console.log(res.data);
+        buildNotification("Reservation confirmed!", "success");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   render() {

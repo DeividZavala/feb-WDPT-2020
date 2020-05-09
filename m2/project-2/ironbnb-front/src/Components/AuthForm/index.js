@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { login, signup } from "../../services/authServices";
 import UIkit from "uikit";
 import AppContext from "../../AppContext";
+import { buildNotification } from "../../utils/notification";
 
 class AuthForm extends Component {
   static contextType = AppContext;
@@ -34,11 +35,7 @@ class AuthForm extends Component {
         history.push(nextRoute);
       })
       .catch((err) => {
-        UIkit.notification({
-          message: `<span uk-icon='icon: close'></span> ${err.response.data.msg}`,
-          status: "danger",
-          pos: "top-right",
-        });
+        buildNotification(err.response.data.msg, "danger", "close");
       });
   };
 

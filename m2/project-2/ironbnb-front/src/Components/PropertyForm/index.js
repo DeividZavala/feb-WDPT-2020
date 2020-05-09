@@ -3,7 +3,7 @@ import { createProperty } from "../../services/propertyServices";
 import AppContext from "../../AppContext";
 import PropertyCard from "../Common/PropertyCard";
 import Form from "./Form";
-import UIkit from "uikit";
+import { buildNotification } from "../../utils/notification";
 
 class PropertyForm extends Component {
   static contextType = AppContext;
@@ -33,13 +33,7 @@ class PropertyForm extends Component {
       })
       .catch((err) => {
         const errors = Object.values(err.response.data.errors);
-        errors.map((error) =>
-          UIkit.notification({
-            message: `<span uk-icon='icon: close'></span> ${error.message}`,
-            status: "danger",
-            pos: "top-right",
-          })
-        );
+        errors.map((error) => buildNotification(error, "danger", "close"));
       });
   };
   render() {

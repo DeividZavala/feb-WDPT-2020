@@ -6,13 +6,18 @@ import AppContext from "../../AppContext";
 class Home extends Component {
   static contextType = AppContext;
   componentDidMount() {
-    const { properties } = this.context.state;
-    if (properties.length < 1) {
-      getProperties().then((res) => {
-        const { result } = res.data;
-        const { setProperties } = this.context;
-        setProperties(result);
-      });
+    const { properties, user } = this.context.state;
+    const { history } = this.props;
+    if (!user._id) {
+      history.push("/login");
+    } else {
+      if (properties.length < 1) {
+        getProperties().then((res) => {
+          const { result } = res.data;
+          const { setProperties } = this.context;
+          setProperties(result);
+        });
+      }
     }
   }
 

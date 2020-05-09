@@ -40,9 +40,13 @@ const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const propertiesRouter = require("./routes/property");
 const reservationsRouter = require("./routes/reservation");
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
-app.use("/properties", propertiesRouter);
-app.use("/reservations", reservationsRouter);
+app.use("api/", indexRouter);
+app.use("api/users", usersRouter);
+app.use("api/properties", propertiesRouter);
+app.use("api/reservations", reservationsRouter);
+
+app.use("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 
 module.exports = app;

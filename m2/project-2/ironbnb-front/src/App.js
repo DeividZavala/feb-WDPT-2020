@@ -20,6 +20,12 @@ class App extends Component {
     this.setState({ properties });
   };
 
+  addProperty = (property) => {
+    let { properties } = this.state;
+    properties = { property, ...properties };
+    this.setState({ properties });
+  };
+
   logout = () => {
     const { history } = this.props;
     logout().then(() => {
@@ -30,9 +36,11 @@ class App extends Component {
   };
 
   render() {
-    const { state, setUser, logout, setProperties } = this;
+    const { state, setUser, logout, setProperties, addProperty } = this;
     return (
-      <AppContext.Provider value={{ state, setUser, logout, setProperties }}>
+      <AppContext.Provider
+        value={{ state, setUser, logout, setProperties, addProperty }}
+      >
         <div className="App">
           <Navbar user={state.user} logout={logout} />
           <Routes />

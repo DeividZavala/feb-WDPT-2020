@@ -3,8 +3,10 @@ import InputField from "../Common/InputField";
 import TextAreaField from "../Common/TextAreaField";
 import { createProperty } from "../../services/propertyServices";
 import UIkit from "uikit";
+import AppContext from "../../AppContext";
 
 class PropertyForm extends Component {
+  static contextType = AppContext;
   state = {
     property: {},
   };
@@ -21,10 +23,13 @@ class PropertyForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const { property } = this.state;
+    const { addProperty } = this.context;
+    const { history } = this.props;
     createProperty(property)
       .then((res) => {
         const { result } = res.data;
-        console.log(result);
+        addProperty(result);
+        history.push("/");
       })
       .catch((err) => {
         const errors = Object.values(err.response.data.errors);
@@ -39,6 +44,7 @@ class PropertyForm extends Component {
   };
   render() {
     console.log(this.state.property);
+    const { description = "" } = this.state.property;
     return (
       <section className="uk-section">
         <div className="uk-container uk-flex uk-flex-center">
@@ -66,6 +72,7 @@ class PropertyForm extends Component {
               />
               <TextAreaField
                 name="description"
+                hint={`${description.length}/50`}
                 handleChange={this.handleChange}
               />
               <TextAreaField

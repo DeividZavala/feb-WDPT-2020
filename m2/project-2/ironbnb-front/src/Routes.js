@@ -10,7 +10,7 @@ const Routes = () => (
     <Route exact path="/login" component={AuthForm} />
     <Route exact path="/signup" component={AuthForm} />
     <Route exact path="/property/new" component={PropertyForm} />
-    <Route exact path="/property/:id" component={() => <h1>detailt</h1>} />
+    <Route exact path="/property/:id" component={PropertyForm} />
   </Switch>
 );
 

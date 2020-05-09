@@ -1,5 +1,9 @@
 import React, { Component } from "react";
-import { createProperty } from "../../services/propertyServices";
+import {
+  createProperty,
+  getPropertyDetail,
+  updateProperty,
+} from "../../services/propertyServices";
 import AppContext from "../../AppContext";
 import PropertyCard from "../Common/PropertyCard";
 import Form from "./Form";
@@ -10,6 +14,17 @@ class PropertyForm extends Component {
   state = {
     property: {},
   };
+
+  componentWillMount() {
+    const { id } = this.props.match.params;
+    if (id) {
+      getPropertyDetail(id).then((res) => {
+        const { result } = res.data;
+        this.setState({ property: result });
+      });
+    }
+  }
+
   handleChange = (e) => {
     let { property } = this.state;
     property = { ...property, [e.target.name]: e.target.value };
@@ -25,7 +40,10 @@ class PropertyForm extends Component {
     const { property } = this.state;
     const { addProperty } = this.context;
     const { history } = this.props;
-    createProperty(property)
+    const { id } = this.props.match.params;
+    const action = id ? updateProperty : createProperty;
+    const params = id ? { property, id } : { property };
+    action(params)
       .then((res) => {
         const { result } = res.data;
         addProperty(result);

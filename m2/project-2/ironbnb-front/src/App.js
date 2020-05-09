@@ -22,7 +22,7 @@ class App extends Component {
 
   addProperty = (property) => {
     let { properties } = this.state;
-    properties = [property, ...properties];
+    properties = { [property._id]: property, ...properties };
     this.setState({ properties });
   };
 

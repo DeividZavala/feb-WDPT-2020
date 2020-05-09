@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { login, signup } from "../../services/authServices";
-import UIkit from "uikit";
 import AppContext from "../../AppContext";
 import { buildNotification } from "../../utils/notification";
 

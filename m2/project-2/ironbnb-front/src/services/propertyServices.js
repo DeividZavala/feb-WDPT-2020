@@ -7,6 +7,14 @@ export const getProperties = () => {
   return axios.get(`${base_url}/properties`);
 };
 
-export const createProperty = (property) => {
-  return axios.post(`${base_url}/properties`, property);
+export const getPropertyDetail = (id) => {
+  return axios.get(`${base_url}/properties/${id}`);
+};
+
+export const createProperty = (params) => {
+  return axios.post(`${base_url}/properties`, params.property);
+};
+
+export const updateProperty = (params) => {
+  return axios.patch(`${base_url}/properties/${params.id}`, params.property);
 };

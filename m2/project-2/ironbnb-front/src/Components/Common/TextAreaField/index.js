@@ -1,6 +1,6 @@
 import React from "react";
 
-const TextAreaField = ({ name, handleChange, hint }) => (
+const TextAreaField = ({ name, handleChange, hint, value }) => (
   <div className="uk-margin">
     <label className="uk-form-label uk-text-capitalize" htmlFor={name}>
       {name} {hint && `(${hint})`}:
@@ -13,6 +13,7 @@ const TextAreaField = ({ name, handleChange, hint }) => (
         id={name}
         cols="30"
         rows="5"
+        value={value}
       ></textarea>
     </div>
   </div>

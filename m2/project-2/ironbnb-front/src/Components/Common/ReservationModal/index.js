@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import InputField from "../InputField";
 import { createReservation } from "../../../services/reservationServices";
 import { buildNotification } from "../../../utils/notification";
+import AppContext from "../../../AppContext";
 import UIkit from "uikit";
 
 class ReservationModal extends Component {
+  static contextType = AppContext;
   state = {
     reservation: {},
   };
@@ -30,11 +32,12 @@ class ReservationModal extends Component {
 
   render() {
     const { title, property, isEditing } = this.props;
-    const reservation = isEditing
-      ? this.props.reservation
-      : this.state.reservation;
+    const { reservation } = this.state;
     return (
-      <div id={`reservate-${property}`} uk-modal="true">
+      <div
+        id={`reservate-${isEditing ? this.props.reservation : property}`}
+        uk-modal="true"
+      >
         <div className="uk-modal-dialog uk-modal-body">
           <h2 className="uk-modal-title">Reservate {title}</h2>
           <form>

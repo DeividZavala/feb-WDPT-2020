@@ -3,6 +3,7 @@ import Slider from "../Slider";
 import ConfirmationModal from "../ConfirmationModal";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
+import ReservationModal from "../ReservationModal";
 
 const SimpleCard = ({
   _id,
@@ -18,6 +19,7 @@ const SimpleCard = ({
   checkout,
 }) => (
   <div className="uk-margin-medium-bottom uk-card uk-card-default">
+    <ReservationModal isEditing reservation={_id} />
     <ConfirmationModal
       handleClick={deleteItem}
       id={_id}
@@ -50,9 +52,21 @@ const SimpleCard = ({
           </div>
         )}
         <div className="uk-flex uk-flex-around">
-          <Link to={`/property/${_id}`} className="uk-button uk-button-default">
-            <span uk-icon="icon:pencil"></span> Editar
-          </Link>
+          {isReservation ? (
+            <button
+              className="uk-button uk-button-default"
+              uk-toggle={`target: #reservate-${property._id}`}
+            >
+              <span uk-icon="icon:pencil"></span> Editar
+            </button>
+          ) : (
+            <Link
+              to={`/property/${_id}`}
+              className="uk-button uk-button-default"
+            >
+              <span uk-icon="icon:pencil"></span> Editar
+            </Link>
+          )}
           <button
             className="uk-button uk-button-danger"
             uk-toggle={`target: #remove-${_id}`}

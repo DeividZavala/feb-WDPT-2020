@@ -7,3 +7,8 @@ export const normalizeData = (arr) => {
 export const denormalizeData = (obj) => {
   return Object.values(obj);
 };
+
+export const filterItem = (items, id) => {
+  delete items[id];
+  return items;
+};

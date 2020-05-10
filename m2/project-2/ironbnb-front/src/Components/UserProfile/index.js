@@ -1,10 +1,18 @@
 import React, { Component } from "react";
-import { getPropertiesByUser } from "../../services/propertyServices";
+import {
+  getPropertiesByUser,
+  deleteProperty,
+} from "../../services/propertyServices";
 import AppContext from "../../AppContext";
-import { normalizeData, denormalizeData } from "../../utils/dataUtils";
+import {
+  normalizeData,
+  denormalizeData,
+  filterItem,
+} from "../../utils/dataUtils";
 import SimplePropertyCard from "../Common/SimplePropertyCard";
 import dayjs from "dayjs";
 import LocalizedFormat from "dayjs/plugin/localizedFormat";
+import UIkit from "uikit";
 dayjs.extend(LocalizedFormat);
 
 class UserProfile extends Component {
@@ -23,6 +31,20 @@ class UserProfile extends Component {
       });
     }
   }
+
+  deleteItem = (id) => {
+    const { properties, userProperties } = this.context.state;
+    const { setProperties, setUserProperties } = this.context;
+    deleteProperty(id).then((res) => {
+      const { result } = res.data;
+      const filteredProperties = filterItem(properties, result._id);
+      const filteredUserProperties = filterItem(userProperties, result._id);
+      setProperties(filteredProperties);
+      setUserProperties(filteredUserProperties);
+      UIkit.modal(`#remove-${result._id}`).hide();
+    });
+  };
+
   render() {
     const { user, userProperties } = this.context.state;
     return (
@@ -47,7 +69,7 @@ class UserProfile extends Component {
             <div className="uk-width-expand">
               <div className="uk-padding-large uk-padding-remove-top uk-padding-remove-bottom">
                 <ul
-                  class="uk-tab uk-child-width-expand"
+                  className="uk-tab uk-child-width-expand"
                   uk-switcher="connect:#menu"
                 >
                   <li>
@@ -58,10 +80,18 @@ class UserProfile extends Component {
                   </li>
                 </ul>
 
-                <ul id="menu" class="uk-switcher uk-margin">
-                  <li>
-                    {denormalizeData(userProperties).map((property) => (
-                      <SimplePropertyCard {...property} />
+                <ul
+                  id="menu"
+                  className="uk-switcher uk-margin uk-height-large"
+                  uk-overflow-auto="true"
+                >
+                  <li className="">
+                    {denormalizeData(userProperties).map((property, index) => (
+                      <SimplePropertyCard
+                        key={index}
+                        deleteItem={this.deleteItem}
+                        {...property}
+                      />
                     ))}
                   </li>
                   <li>Reservaciones</li>

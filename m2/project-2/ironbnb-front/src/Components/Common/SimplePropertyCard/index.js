@@ -1,5 +1,6 @@
 import React from "react";
 import Slider from "../Slider";
+import ConfirmationModal from "../ConfirmationModal";
 import { Link } from "react-router-dom";
 
 const SimplePropertyCard = ({
@@ -8,9 +9,14 @@ const SimplePropertyCard = ({
   title,
   price,
   capacity,
-  description,
+  deleteItem,
 }) => (
   <div className="uk-margin-medium-bottom uk-card uk-card-default">
+    <ConfirmationModal
+      handleClick={deleteItem}
+      id={_id}
+      message={`Delete ${title}?`}
+    />
     <div className="uk-grid">
       <div className="uk-width-1-3">
         <Slider images={images} />
@@ -27,7 +33,10 @@ const SimplePropertyCard = ({
           <Link to={`/property/${_id}`} className="uk-button uk-button-default">
             <span uk-icon="icon:pencil"></span> Editar
           </Link>
-          <button className="uk-button uk-button-danger">
+          <button
+            className="uk-button uk-button-danger"
+            uk-toggle={`target: #remove-${_id}`}
+          >
             <span uk-icon="icon:trash"></span> Borrar
           </button>
         </div>

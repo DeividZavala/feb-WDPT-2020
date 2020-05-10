@@ -22,3 +22,7 @@ export const createProperty = (params) => {
 export const updateProperty = (params) => {
   return axios.patch(`${base_url}/properties/${params.id}`, params.property);
 };
+
+export const deleteProperty = (id) => {
+  return axios.delete(`${base_url}/properties/${id}`);
+};

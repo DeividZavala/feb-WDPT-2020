@@ -3,13 +3,17 @@ import {
   getPropertiesByUser,
   deleteProperty,
 } from "../../services/propertyServices";
+import {
+  getUserReservations,
+  deleteReservation,
+} from "../../services/reservationServices";
 import AppContext from "../../AppContext";
 import {
   normalizeData,
   denormalizeData,
   filterItem,
 } from "../../utils/dataUtils";
-import SimplePropertyCard from "../Common/SimplePropertyCard";
+import SimpleCard from "../Common/SimpleCard";
 import dayjs from "dayjs";
 import LocalizedFormat from "dayjs/plugin/localizedFormat";
 import UIkit from "uikit";
@@ -23,16 +27,21 @@ class UserProfile extends Component {
       userProperties,
     } = this.context.state;
     if (denormalizeData(userProperties).length < 1) {
-      const { setUserProperties } = this.context;
+      const { setUserProperties, setUserReservations } = this.context;
       getPropertiesByUser(_id).then((res) => {
         const { result } = res.data;
         const properties = normalizeData(result);
         setUserProperties(properties);
       });
+      getUserReservations().then((res) => {
+        const { result } = res.data;
+        const reservations = normalizeData(result);
+        setUserReservations(reservations);
+      });
     }
   }
 
-  deleteItem = (id) => {
+  removeProperty = (id) => {
     const { properties, userProperties } = this.context.state;
     const { setProperties, setUserProperties } = this.context;
     deleteProperty(id).then((res) => {
@@ -45,8 +54,19 @@ class UserProfile extends Component {
     });
   };
 
+  removeReservation = (id) => {
+    const { userReservations } = this.context.state;
+    const { setUserReservations } = this.context;
+    deleteReservation(id).then((res) => {
+      const { result } = res.data;
+      const filteredUserReservations = filterItem(userReservations, result._id);
+      setUserReservations(filteredUserReservations);
+      UIkit.modal(`#remove-${result._id}`).hide();
+    });
+  };
+
   render() {
-    const { user, userProperties } = this.context.state;
+    const { user, userProperties, userReservations } = this.context.state;
     return (
       <div className="uk-section">
         <div className="uk-container">
@@ -87,14 +107,25 @@ class UserProfile extends Component {
                 >
                   <li className="">
                     {denormalizeData(userProperties).map((property, index) => (
-                      <SimplePropertyCard
+                      <SimpleCard
                         key={index}
-                        deleteItem={this.deleteItem}
+                        deleteItem={this.removeProperty}
                         {...property}
                       />
                     ))}
                   </li>
-                  <li>Reservaciones</li>
+                  <li>
+                    {denormalizeData(userReservations).map(
+                      (reservation, index) => (
+                        <SimpleCard
+                          key={index}
+                          isReservation
+                          deleteItem={this.removeReservation}
+                          {...reservation}
+                        />
+                      )
+                    )}
+                  </li>
                 </ul>
               </div>
             </div>

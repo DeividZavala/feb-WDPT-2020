@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import InputField from "../InputField";
 import { createReservation } from "../../../services/reservationServices";
 import { buildNotification } from "../../../utils/notification";
+import UIkit from "uikit";
 
 class ReservationModal extends Component {
   state = {
@@ -18,9 +19,9 @@ class ReservationModal extends Component {
     const { reservation } = this.state;
     const { property } = this.props;
     createReservation({ ...reservation, property })
-      .then((res) => {
-        console.log(res.data);
+      .then(() => {
         buildNotification("Reservation confirmed!", "success");
+        UIkit.modal(`#reservate-${property}`).hide();
       })
       .catch((err) => {
         console.log(err);
@@ -28,7 +29,10 @@ class ReservationModal extends Component {
   };
 
   render() {
-    const { title, property } = this.props;
+    const { title, property, isEditing } = this.props;
+    const reservation = isEditing
+      ? this.props.reservation
+      : this.state.reservation;
     return (
       <div id={`reservate-${property}`} uk-modal="true">
         <div className="uk-modal-dialog uk-modal-body">
@@ -38,6 +42,7 @@ class ReservationModal extends Component {
               name="guest_number"
               type="number"
               min="1"
+              value={reservation.guest_number}
               handleChange={this.handleChange}
               placeholder="Guest number"
             />
@@ -45,11 +50,13 @@ class ReservationModal extends Component {
               name="checkin"
               handleChange={this.handleChange}
               type="date"
+              value={reservation.checkin}
               placeholder="Checkin Date"
             />
             <InputField
               name="checkout"
               type="date"
+              value={reservation.checkout}
               handleChange={this.handleChange}
               placeholder="Checkout Date"
             />

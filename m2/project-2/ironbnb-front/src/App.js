@@ -11,6 +11,7 @@ class App extends Component {
     user: JSON.parse(localStorage.getItem("user")) || {},
     properties: {},
     userProperties: {},
+    userReservations: {},
   };
 
   setUser = (user) => {
@@ -23,6 +24,10 @@ class App extends Component {
 
   setUserProperties = (userProperties) => {
     this.setState({ userProperties });
+  };
+
+  setUserReservations = (userReservations) => {
+    this.setState({ userReservations });
   };
 
   addProperty = (property) => {
@@ -48,6 +53,7 @@ class App extends Component {
       setProperties,
       addProperty,
       setUserProperties,
+      setUserReservations,
     } = this;
     return (
       <AppContext.Provider
@@ -58,6 +64,7 @@ class App extends Component {
           setProperties,
           addProperty,
           setUserProperties,
+          setUserReservations,
         }}
       >
         <div className="App">

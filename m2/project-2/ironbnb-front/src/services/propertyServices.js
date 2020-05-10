@@ -7,6 +7,10 @@ export const getProperties = () => {
   return axios.get(`${base_url}/properties`);
 };
 
+export const getPropertiesByUser = (id) => {
+  return axios.get(`${base_url}/properties?owner=${id}`);
+};
+
 export const getPropertyDetail = (id) => {
   return axios.get(`${base_url}/properties/${id}`);
 };

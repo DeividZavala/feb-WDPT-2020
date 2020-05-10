@@ -4,7 +4,7 @@ const Property = require("../models/Property");
 const { veryToken } = require("../utils/auth");
 
 router.get("/", veryToken, (req, res) => {
-  Property.find()
+  Property.find(req.query)
     .populate("owner", "name profile_picture")
     .then((properties) => {
       res.status(200).json({

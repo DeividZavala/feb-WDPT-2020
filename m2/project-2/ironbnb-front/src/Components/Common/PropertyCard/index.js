@@ -70,7 +70,7 @@ const PropertyCard = ({
           <div>Precio por noche: {price}</div>
           <div>Capacidad: {capacity} personas</div>
           <div>Creada {dayjs(createdAt).locale("es").fromNow()}</div>
-          <p>{description}</p>
+          <p className="uk-text-break">{description}</p>
           <div className="uk-text-center">
             <button
               disabled={isDemo}

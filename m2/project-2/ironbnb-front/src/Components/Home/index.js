@@ -13,7 +13,7 @@ class Home extends Component {
     if (!user._id) {
       history.push("/login");
     } else {
-      if (properties.length < 1) {
+      if (denormalizeData(properties).length < 1) {
         getProperties().then((res) => {
           const { result } = res.data;
           const properties = normalizeData(result);

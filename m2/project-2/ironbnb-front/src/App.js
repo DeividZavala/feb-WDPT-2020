@@ -9,7 +9,8 @@ import { logout } from "./services/authServices";
 class App extends Component {
   state = {
     user: JSON.parse(localStorage.getItem("user")) || {},
-    properties: [],
+    properties: {},
+    userProperties: {},
   };
 
   setUser = (user) => {
@@ -18,6 +19,10 @@ class App extends Component {
 
   setProperties = (properties) => {
     this.setState({ properties });
+  };
+
+  setUserProperties = (userProperties) => {
+    this.setState({ userProperties });
   };
 
   addProperty = (property) => {
@@ -36,10 +41,24 @@ class App extends Component {
   };
 
   render() {
-    const { state, setUser, logout, setProperties, addProperty } = this;
+    const {
+      state,
+      setUser,
+      logout,
+      setProperties,
+      addProperty,
+      setUserProperties,
+    } = this;
     return (
       <AppContext.Provider
-        value={{ state, setUser, logout, setProperties, addProperty }}
+        value={{
+          state,
+          setUser,
+          logout,
+          setProperties,
+          addProperty,
+          setUserProperties,
+        }}
       >
         <div className="App">
           <Navbar user={state.user} logout={logout} />

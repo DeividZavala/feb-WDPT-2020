@@ -15,8 +15,8 @@ import {
 } from "../../utils/dataUtils";
 import SimpleCard from "../Common/SimpleCard";
 import dayjs from "dayjs";
-import LocalizedFormat from "dayjs/plugin/localizedFormat";
 import UIkit from "uikit";
+import LocalizedFormat from "dayjs/plugin/localizedFormat";
 dayjs.extend(LocalizedFormat);
 
 class UserProfile extends Component {

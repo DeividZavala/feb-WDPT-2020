@@ -5,6 +5,8 @@ import Routes from "./Routes";
 import AppContext from "./AppContext";
 import { withRouter } from "react-router";
 import { logout } from "./services/authServices";
+import { denormalizeData, normalizeData } from "./utils/dataUtils";
+import { getProperties } from "./services/propertyServices";
 
 class App extends Component {
   state = {

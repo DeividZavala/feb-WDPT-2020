@@ -4,6 +4,7 @@ import AuthForm from "./Components/AuthForm";
 import Home from "./Components/Home";
 import PropertyForm from "./Components/PropertyForm";
 import UserProfile from "./Components/UserProfile";
+import ReservationForm from "./Components/ReservationForm";
 
 const Routes = () => (
   <Switch>
@@ -13,6 +14,8 @@ const Routes = () => (
     <Route exact path="/profile" component={UserProfile} />
     <Route exact path="/property/new" component={PropertyForm} />
     <Route exact path="/property/:id" component={PropertyForm} />
+    <Route exact path="/reservate/:property_id" component={ReservationForm} />
+    <Route exact path="/reservate/:id/edit" component={ReservationForm} />
   </Switch>
 );
 

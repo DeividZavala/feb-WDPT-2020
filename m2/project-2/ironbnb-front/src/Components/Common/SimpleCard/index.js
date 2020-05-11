@@ -53,12 +53,12 @@ const SimpleCard = ({
         )}
         <div className="uk-flex uk-flex-around">
           {isReservation ? (
-            <button
+            <Link
               className="uk-button uk-button-default"
-              uk-toggle={`target: #reservate-${property._id}`}
+              to={`/reservate/${_id}/edit`}
             >
               <span uk-icon="icon:pencil"></span> Editar
-            </button>
+            </Link>
           ) : (
             <Link
               to={`/property/${_id}`}

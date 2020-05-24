@@ -6,11 +6,11 @@ function reducer(state = initialState, action) {
   switch (action.type) {
     case ADD_ONE:
       return {
-        counter: state.number + 1,
+        counter: state.counter + 1,
       };
     case MINUS_ONE:
       return {
-        counter: state.number - 1,
+        counter: state.counter - 1,
       };
     default:
       return state;

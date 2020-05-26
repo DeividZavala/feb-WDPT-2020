@@ -1,10 +1,12 @@
 import React from "react";
 
-const TodoList = () => {
+const TodoList = ({ todos }) => {
   return (
     <>
       <ul>
-        <li>Todo</li>
+        {todos.map((todo, index) => (
+          <li key={index}>{todo.body}</li>
+        ))}
       </ul>
     </>
   );

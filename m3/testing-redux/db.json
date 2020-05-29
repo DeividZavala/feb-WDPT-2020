@@ -1,3 +1,32 @@
 {
-  "todos": [{ "id": 1, "body": "some comment" }]
+  "todos": [
+    {
+      "id": 1,
+      "body": "some comment"
+    },
+    {
+      "body": "tests de create",
+      "id": 2
+    },
+    {
+      "body": "response",
+      "id": 3
+    },
+    {
+      "body": "otro test",
+      "id": 4
+    },
+    {
+      "body": "otro test 3",
+      "id": 5
+    },
+    {
+      "body": "otro test 4",
+      "id": 6
+    },
+    {
+      "body": "ultimo",
+      "id": 7
+    }
+  ]
 }

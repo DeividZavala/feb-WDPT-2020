@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AppContext } from "../../AppContext";
 
 const TodoList = () => {
+  const { todos } = useContext(AppContext);
+
   return (
     <div>
       <ul className="uk-list uk-list-divider">
-        <li>List item 1</li>
+        {todos.map((todo, index) => (
+          <li key={index}>
+            <strong>{todo.title}: </strong>
+            {todo.body}
+          </li>
+        ))}
       </ul>
     </div>
   );

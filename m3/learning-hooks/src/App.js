@@ -1,20 +1,18 @@
-import React, { useState } from "react";
-import "./App.css";
+import React from "react";
+import TodoForm from "./components/TodoForm";
+import TodoList from "./components/TodoList";
 
-function App() {
-  const [counter, setCounter] = useState(0);
-  // const [products, setProducts] = useState([]);
-  // const [toggle, setToggle] = useState(false);
-
+const App = () => {
   return (
-    <div className="App">
-      <p>{counter}</p>
-      <button onClick={() => setCounter(counter + 1)}>Sumar 1</button>
-      <button onClick={() => setCounter((prevState) => prevState - 1)}>
-        Restar 1
-      </button>
-    </div>
+    <section className="uk-section">
+      <div className="uk-container">
+        <div className="uk-grid uk-child-width-1-2">
+          <TodoForm />
+          <TodoList />
+        </div>
+      </div>
+    </section>
   );
-}
+};
 
 export default App;

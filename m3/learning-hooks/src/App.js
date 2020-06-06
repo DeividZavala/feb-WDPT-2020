@@ -1,16 +1,23 @@
 import React from "react";
-import TodoForm from "./components/TodoForm";
-import TodoList from "./components/TodoList";
+import Routes from "./Routes";
+import { Link } from "react-router-dom";
 
 const App = () => {
   return (
-    <section className="uk-section">
-      <div className="uk-container">
-        <div className="uk-grid uk-child-width-1-2">
-          <TodoForm />
-          <TodoList />
+    <section className="">
+      <nav className="uk-navbar-container" uk-navbar="true">
+        <div className="uk-navbar-left">
+          <ul className="uk-navbar-nav">
+            <li>
+              <Link to="/">TODOS</Link>
+            </li>
+            <li>
+              <Link to="/rickandmorty">Rick and Morty</Link>
+            </li>
+          </ul>
         </div>
-      </div>
+      </nav>
+      <Routes />
     </section>
   );
 };

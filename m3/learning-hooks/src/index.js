@@ -7,13 +7,20 @@ import * as serviceWorker from "./serviceWorker";
 import UIkit from "uikit";
 import Icons from "uikit/dist/js/uikit-icons";
 import "uikit/dist/css/uikit.min.css";
+import { BrowserRouter } from "react-router-dom";
 
 UIkit.use(Icons);
+
+const WithRouter = () => (
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
 
 ReactDOM.render(
   <React.StrictMode>
     <AppContextProvider>
-      <App />
+      <WithRouter />
     </AppContextProvider>
   </React.StrictMode>,
   document.getElementById("root")

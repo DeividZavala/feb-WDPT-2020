@@ -1,0 +1,5 @@
+{
+  "todos": [
+    { "id": 1, "title": "fetch todos", "body": "dispatch getTodos action" }
+  ]
+}

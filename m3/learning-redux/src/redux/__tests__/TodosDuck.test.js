@@ -1,9 +1,17 @@
 import configureStore from "redux-mock-store";
 import thunk from "redux-thunk";
-import { getTodos } from "../TodosDuck";
+import reducer, { getTodos, loadingTodos, getTodosSuccess } from "../TodosDuck";
 import mockAxios from "axios";
 
 const mockStore = configureStore([thunk]);
+
+const buildState = (changes) => ({
+  loading: false,
+  status: "", // pending | success | error
+  results: {},
+  error: null,
+  ...changes,
+});
 
 describe("todo actions creator", () => {
   it("should handle getTodos action success", async () => {
@@ -38,5 +46,29 @@ describe("todo actions creator", () => {
     await store.dispatch(getTodos());
     const actions = store.getActions();
     expect(actions).toStrictEqual(expectedActions);
+  });
+});
+
+describe("todo reducer", () => {
+  it("should return the initial state on default", () => {
+    const initialState = buildState();
+    const state = reducer(initialState, {});
+    expect(state).toStrictEqual(initialState);
+  });
+
+  it("should be loading", () => {
+    const initialState = buildState({ loading: true });
+    const action = loadingTodos();
+    const state = reducer(initialState, action);
+    expect(state).toStrictEqual(initialState);
+  });
+
+  it("should return results", () => {
+    const initialState = buildState({
+      results: { 1: { id: 1, title: "test", body: "test" } },
+    });
+    const action = getTodosSuccess([{ id: 1, title: "test", body: "test" }]);
+    const state = reducer(initialState, action);
+    expect(state).toStrictEqual(initialState);
   });
 });

@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import counter from "./reducer";
 import todos from "./TodosDuck";
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   counter,
   todos,
 });

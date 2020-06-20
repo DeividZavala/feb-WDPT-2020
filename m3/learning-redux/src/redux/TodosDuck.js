@@ -66,7 +66,7 @@ export const getTodos = () => (dispatch) => {
   dispatch(loadingTodos());
   // status === "pending"
 
-  return axios
+  axios
     .get("http://localhost:4000/todos")
     .then((res) => {
       dispatch(getTodosSuccess(res.data));

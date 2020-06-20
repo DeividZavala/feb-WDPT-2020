@@ -38,7 +38,6 @@ describe("TodoList component", () => {
     });
     const store = mockStore(initialState);
     renderWithProvider(<TodoList />, { store });
-    screen.debug();
     expect(screen.getAllByRole("listitem").length).toBe(1);
   });
 });

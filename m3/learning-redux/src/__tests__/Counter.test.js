@@ -5,6 +5,7 @@ import { fireEvent } from "@testing-library/dom";
 
 describe("Counter component", () => {
   it("should render", () => {
+    // configuration
     const { getByRole } = renderWithProvider(<Counter />);
     expect(getByRole("heading")).toBeInTheDocument();
   });

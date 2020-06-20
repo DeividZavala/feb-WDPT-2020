@@ -12,3 +12,5 @@ export const renderWithProvider = (
     ...renderOptions,
   });
 };
+
+//export const renderWithRouter = (component) => <BrowserRouter>{component}</BrowserRouter>;

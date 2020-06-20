@@ -13,6 +13,7 @@ const TodoList = () => {
   }, [dispatch]);
   return (
     <div>
+      <h1>Todos</h1>
       {loadingTodos && <h2>Cargando...</h2>}
       {!loadingTodos && todos && (
         <ul>

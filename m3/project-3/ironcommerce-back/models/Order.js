@@ -15,7 +15,11 @@ const orderSchema = new Schema(
       type: [{ product: Schema.Types.ObjectId, quantity: Number }],
       min: [1, "La order debe contener por lo menos un producto"],
     },
-    status: { type: String, enum: ["Pendiente", "Enviado", "Entregado"] },
+    status: {
+      type: String,
+      enum: ["Pendiente", "Enviado", "Entregado"],
+      default: "Pendiente",
+    },
   },
   { timestamps: true }
 );

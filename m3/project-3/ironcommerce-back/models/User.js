@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, models } = require("mongoose");
 
 const userSchema = new Schema(
   {
@@ -11,7 +11,7 @@ const userSchema = new Schema(
       validate: {
         message: "El email ya esta en uso",
         validator: async (email) => {
-          const items = await mongoose.models["User"].count({ email });
+          const items = await models["User"].count({ email });
           return items < 1;
         },
       },

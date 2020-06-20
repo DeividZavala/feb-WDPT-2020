@@ -37,7 +37,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const usersRouter = require("./routes/users");
 const productsRouter = require("./routes/products");
+const ordersRouter = require("./routes/Order");
 app.use("/users", usersRouter);
 app.use("/products", productsRouter);
+app.use("/orders", ordersRouter);
 
 module.exports = app;

@@ -12,7 +12,12 @@ const orderSchema = new Schema(
       required: [true, "Debes agregar el cliente"],
     },
     items: {
-      type: [{ product: Schema.Types.ObjectId, quantity: Number }],
+      type: [
+        {
+          product: { type: Schema.Types.ObjectId, ref: "Product" },
+          quantity: Number,
+        },
+      ],
       min: [1, "La order debe contener por lo menos un producto"],
     },
     status: {

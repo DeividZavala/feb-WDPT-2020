@@ -7,6 +7,7 @@ const cartSchema = new Schema(
       required: [true, "Debes agregar un total"],
     },
     client: {
+      unique: true,
       type: Schema.Types.ObjectId,
       ref: "User",
       required: [true, "Debes agregar el cliente"],

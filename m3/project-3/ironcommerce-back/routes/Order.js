@@ -2,6 +2,7 @@ const { Router } = require("express");
 const router = Router();
 const Order = require("../models/Order");
 const { veryToken } = require("../helpers/auth");
+const { emailSender } = require("../helpers/mailer");
 
 router.get("/", veryToken, (req, res) => {
   const { _id: client } = req.user;
@@ -24,11 +25,27 @@ router.get("/:id", veryToken, (req, res) => {
 
 router.post("/", veryToken, (req, res) => {
   //req.body = { total: 232, item: [{ product: "id", quantity: 2 }] };
-  const { _id: client } = req.user;
+  const { _id: client, email } = req.user;
   const order = { ...req.body, client };
   Order.create(order)
-    .then((result) => {
-      res.status(200).json({ result });
+    .then(async (result) => {
+      const populated = await result.populate({
+        path: "items",
+        populate: {
+          path: "product",
+        },
+      });
+      console.log(populated);
+      const options = {
+        filename: "billing",
+        email,
+        message: "Thanks for your order",
+        subject: "Recipe",
+        total: 2000,
+        items: [{ product: { title: "lobo", price: 2000 }, quantity: 1 }],
+      };
+      await emailSender(options);
+      res.status(200).json({ populated });
     })
     .catch((err) => res.status(400).json(err));
 });

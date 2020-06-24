@@ -33,7 +33,7 @@ router.post("/login", (req, res) => {
         const token = jwt.sign({ id: user._id }, process.env.SECRET, {
           expiresIn: "1d",
         });
-        res
+        return res
           .cookie("token", token, {
             expires: new Date(Date.now() + 86400000),
             secure: false,

@@ -29,20 +29,20 @@ router.post("/", veryToken, (req, res) => {
   const order = { ...req.body, client };
   Order.create(order)
     .then(async (result) => {
-      const populated = await result.populate({
+      const populated = await Order.populate(result, {
         path: "items",
         populate: {
           path: "product",
+          select: "title price",
         },
       });
-      console.log(populated);
+      const order = populated.toObject();
       const options = {
         filename: "billing",
         email,
         message: "Thanks for your order",
         subject: "Recipe",
-        total: 2000,
-        items: [{ product: { title: "lobo", price: 2000 }, quantity: 1 }],
+        ...order,
       };
       await emailSender(options);
       res.status(200).json({ populated });

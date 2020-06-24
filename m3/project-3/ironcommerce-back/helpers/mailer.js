@@ -18,7 +18,6 @@ const generateHTML = (filename, options) => {
 };
 
 exports.emailSender = (options) => {
-  console.log(options);
   const html = generateHTML(options.filename, options);
   const mailOptions = {
     from: `🤯 ${options.subject} 🤯<noreply@deivid.com>`,

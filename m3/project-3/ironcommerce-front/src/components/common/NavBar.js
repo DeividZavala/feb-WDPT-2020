@@ -28,7 +28,9 @@ const Navbar = () => {
             <div className="uk-navbar-dropdown">
               <ul className="uk-nav uk-navbar-dropdown-nav">
                 <li>
-                  <a href="#">Logout</a>
+                  <button className="uk-button uk-button-default">
+                    Logout
+                  </button>
                 </li>
               </ul>
             </div>

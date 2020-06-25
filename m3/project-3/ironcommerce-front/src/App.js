@@ -1,11 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import Navbar from "~commons/NavBar";
+import "./App.css";
+import Product from "~commons/Product";
+import Cart from "~components/Cart";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <Cart />
+      <Navbar />
+      <div className="uk-section">
+        <div className="uk-container">
+          <div className="uk-grid uk-child-width-1-4">
+            <Product />
+          </div>
+        </div>
+      </div>
+      <div className="uk-section">
+        <div className="uk-container"></div>
+      </div>
+      {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
@@ -18,7 +33,7 @@ function App() {
         >
           Learn React
         </a>
-      </header>
+      </header> */}
     </div>
   );
 }

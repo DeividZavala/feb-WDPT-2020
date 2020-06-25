@@ -5,24 +5,21 @@ import "./App.css";
 import Product from "~commons/Product";
 import Cart from "~components/Cart";
 import CheckoutTable from "~components/CheckoutTable";
+import Section from "~commons/Section";
 
 function App() {
   return (
     <div className="App">
       <Cart />
       <Navbar />
-      <div className="uk-section">
-        <div className="uk-container">
-          <div className="uk-grid uk-child-width-1-4">
-            <Product />
-          </div>
+      <Section>
+        <div className="uk-grid uk-child-width-1-4">
+          <Product />
         </div>
-      </div>
-      <div className="uk-section">
-        <div className="uk-container">
-          <CheckoutTable />
-        </div>
-      </div>
+      </Section>
+      <Section>
+        <CheckoutTable />
+      </Section>
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>

@@ -4,6 +4,7 @@ import Navbar from "~commons/NavBar";
 import "./App.css";
 import Product from "~commons/Product";
 import Cart from "~components/Cart";
+import CheckoutTable from "~components/CheckoutTable";
 
 function App() {
   return (
@@ -18,7 +19,9 @@ function App() {
         </div>
       </div>
       <div className="uk-section">
-        <div className="uk-container"></div>
+        <div className="uk-container">
+          <CheckoutTable />
+        </div>
       </div>
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />

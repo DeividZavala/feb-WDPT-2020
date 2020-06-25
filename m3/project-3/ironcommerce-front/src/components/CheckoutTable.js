@@ -72,7 +72,10 @@ const CheckoutTable = () => {
               </td>
               <td class="">$12314.00</td>
               <td class="">
-                <span uk-icon="icon:trash;ratio:1.2"></span>
+                <span
+                  className="remove-icon"
+                  uk-icon="icon:trash;ratio:1.2"
+                ></span>
               </td>
             </tr>
           </tbody>

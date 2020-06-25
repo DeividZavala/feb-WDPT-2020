@@ -55,7 +55,7 @@ const CartItem = () => {
         </span>
         <span>$120.00 x1</span>
       </div>
-      <span className="uk-width-1-4 pointed" uk-icon="trash" />
+      <span className="uk-width-1-4 pointed remove-icon" uk-icon="trash" />
     </CartItemContainer>
   );
 };

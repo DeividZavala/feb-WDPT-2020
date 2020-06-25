@@ -43,6 +43,10 @@ body {
   cursor: pointer;
 }
 
+.remove-icon {
+  color: #f0506e;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

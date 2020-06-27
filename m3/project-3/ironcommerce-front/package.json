@@ -18,7 +18,7 @@
     "uikit": "^3.5.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -41,7 +41,8 @@
   },
   "_moduleAliases": {
     "~components": "./src/components",
-    "~commons": "./src/components/common"
+    "~commons": "./src/components/common",
+    "~redux": "./src/redux"
   },
   "devDependencies": {
     "link-module-alias": "^1.2.0"

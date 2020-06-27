@@ -17,31 +17,38 @@ const BuyBtn = styled.button`
   }
 `;
 
-const Product = () => {
+const getDiscount = (price, discount) => {
+  return price * (1 - discount / 100);
+};
+
+const Product = ({ _id, title, images, price, discount }) => {
   return (
     <div>
       <div className="uk-card uk-card-default">
         <div className="uk-card-body uk-padding-remove">
           <div>
-            <Link to={"/products/:id"}>
+            <Link to={`/products/${_id}`}>
               <div
                 className="uk-inline uk-background-cover uk-height-medium uk-panel uk-flex uk-flex-center uk-flex-middle"
                 style={{
-                  backgroundImage:
-                    "url(https://getuikit.com/docs/images/dark.jpg)",
+                  backgroundImage: `url(${images[0]})`,
                 }}
               ></div>
             </Link>
           </div>
           <div className="uk-text-center uk-flex uk-flex-center uk-flex-column">
             <h4 className="uk-margin-small-top uk-margin-small-bottom">
-              Nombre
+              {title}
             </h4>
             <div className="uk-flex uk-flex-center uk-margin-small-bottom">
-              <Discount className="uk-text-bold uk-margin-small-right">
-                $123.00
-              </Discount>
-              <div className="uk-text-bold">$123.00</div>
+              {discount && (
+                <Discount className="uk-text-bold uk-margin-small-right">
+                  ${price}.00
+                </Discount>
+              )}
+              <div className="uk-text-bold">
+                ${discount ? getDiscount(price, discount) : price}.00
+              </div>
             </div>
           </div>
         </div>

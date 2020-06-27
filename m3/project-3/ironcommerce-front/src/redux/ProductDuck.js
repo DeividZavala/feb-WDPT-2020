@@ -1,4 +1,5 @@
 import axios from "axios";
+import { normalizeData } from "../utils/formatters";
 
 const LOADING = "ironcommerce/products/LOADING";
 const GET_PRODUCTS_SUCCESS = "ironcommerce/products/GET_PRODUCTS_SUCCESS";
@@ -11,12 +12,12 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
-  switch (action.key) {
+  switch (action.type) {
     case LOADING:
       return { ...state, status: "pending" };
 
     case GET_PRODUCTS_SUCCESS:
-      return { ...state, status: "success", items: action.payload };
+      return { ...state, status: "success", items: { ...action.payload } };
 
     case GET_PRODUCTS_ERROR:
       return { ...state, status: "error", error: action.error };
@@ -45,7 +46,8 @@ export const fetchProducts = () => (dispatch) => {
   return axios
     .get("http://localhost:3000/products")
     .then((res) => {
-      dispatch(getProductsSuccess(res.data.result));
+      const items = normalizeData(res.data.result);
+      dispatch(getProductsSuccess(items));
     })
     .catch((err) => {
       dispatch(getProductsError(err));

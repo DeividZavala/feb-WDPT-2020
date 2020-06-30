@@ -5,7 +5,6 @@ const InputField = ({
   type = "text",
   handleChange,
   placeholder,
-  value = "",
   ...props
 }) => (
   <div className="uk-margin">
@@ -19,7 +18,6 @@ const InputField = ({
         className="uk-input"
         id={name}
         type={type}
-        value={value}
         placeholder={placeholder}
         {...props}
       />

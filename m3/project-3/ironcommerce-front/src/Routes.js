@@ -2,6 +2,8 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Home from "~components/Home";
 import Auth from "~components/Auth";
+import CreateProduct from "~components/NewProduct";
+import Checkout from "~components/Checkout";
 
 const Routes = () => (
   <Switch>
@@ -15,10 +17,10 @@ const Routes = () => (
       <h1>signup</h1>
     </Route>
     <Route exact path="/checkout">
-      <h1>checkout</h1>
+      <Checkout />
     </Route>
     <Route exact path="/create-product">
-      <h1>create</h1>
+      <CreateProduct />
     </Route>
   </Switch>
 );

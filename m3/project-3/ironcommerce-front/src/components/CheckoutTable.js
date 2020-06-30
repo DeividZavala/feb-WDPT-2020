@@ -36,7 +36,28 @@ const BuyBtn = styled.a`
   }
 `;
 
-const CheckoutTable = () => {
+const TableItem = ({ title, images, quantity, price, handleClick }) => (
+  <tr>
+    <td>
+      <img class="uk-preserve-width" src={images[0]} width="150" alt="" />
+    </td>
+    <td class="uk-text-truncate">{title}</td>
+    <td class="">${price}.00</td>
+    <td>
+      <div class="uk-flex uk-flex-middle uk-flex-around">
+        <ActionBtn>-</ActionBtn>
+        {quantity}
+        <ActionBtn onClick={handleClick}>+</ActionBtn>
+      </div>
+    </td>
+    <td class="">${quantity * price}.00</td>
+    <td class="">
+      <span className="remove-icon" uk-icon="icon:trash;ratio:1.2"></span>
+    </td>
+  </tr>
+);
+
+const CheckoutTable = ({ products, total, handleClick, handleCreateOrder }) => {
   return (
     <div>
       <div class="uk-overflow-auto">
@@ -52,39 +73,22 @@ const CheckoutTable = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                <img
-                  class="uk-preserve-width"
-                  src="https://getuikit.com/docs/images/dark.jpg"
-                  width="150"
-                  alt=""
-                />
-              </td>
-              <td class="uk-text-truncate">
-                title asdasdasdadsasd asdadsasd asdad
-              </td>
-              <td class="">$12314.00</td>
-              <td>
-                <div class="uk-flex uk-flex-middle uk-flex-around">
-                  <ActionBtn>-</ActionBtn>1<ActionBtn>+</ActionBtn>
-                </div>
-              </td>
-              <td class="">$12314.00</td>
-              <td class="">
-                <span
-                  className="remove-icon"
-                  uk-icon="icon:trash;ratio:1.2"
-                ></span>
-              </td>
-            </tr>
+            {products.map((product) => (
+              <TableItem
+                {...product.info}
+                quantity={product.quantity}
+                handleClick={() => handleClick(product.info)}
+              />
+            ))}
           </tbody>
         </table>
       </div>
       <TotalContainer>
         <div className="uk-flex uk-width-1-3 uk-flex-around uk-flex-middle uk-text-bold">
-          Total: $1213.00
-          <BuyBtn className="uk-button">Place Order</BuyBtn>
+          Total: ${total}.00
+          <BuyBtn className="uk-button" onClick={handleCreateOrder}>
+            Place Order
+          </BuyBtn>
         </div>
       </TotalContainer>
     </div>

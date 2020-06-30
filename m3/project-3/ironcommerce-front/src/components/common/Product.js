@@ -21,7 +21,7 @@ const getDiscount = (price, discount) => {
   return price * (1 - discount / 100);
 };
 
-const Product = ({ _id, title, images, price, discount }) => {
+const Product = ({ _id, title, images, price, discount, handleClick }) => {
   return (
     <div>
       <div className="uk-card uk-card-default">
@@ -53,7 +53,9 @@ const Product = ({ _id, title, images, price, discount }) => {
           </div>
         </div>
         <div className="uk-card-footer">
-          <BuyBtn className="uk-button">Comprar</BuyBtn>
+          <BuyBtn className="uk-button" onClick={handleClick}>
+            Comprar
+          </BuyBtn>
         </div>
       </div>
     </div>

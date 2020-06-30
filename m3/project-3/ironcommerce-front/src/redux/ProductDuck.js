@@ -5,6 +5,9 @@ const LOADING = "ironcommerce/products/LOADING";
 const GET_PRODUCTS_SUCCESS = "ironcommerce/products/GET_PRODUCTS_SUCCESS";
 const GET_PRODUCTS_ERROR = "ironcommerce/products/GET_PRODUCTS_ERROR";
 
+const CREATE_PRODUCTS_SUCCESS = "ironcommerce/products/CREATE_PRODUCTS_SUCCESS";
+const CREATE_PRODUCTS_ERROR = "ironcommerce/products/CREATE_PRODUCTS_ERROR";
+
 const initialState = {
   items: {},
   status: "",
@@ -21,6 +24,17 @@ export default function reducer(state = initialState, action) {
 
     case GET_PRODUCTS_ERROR:
       return { ...state, status: "error", error: action.error };
+
+    case CREATE_PRODUCTS_SUCCESS:
+      return {
+        ...state,
+        status: "success",
+        items: { ...state.items, [action.payload._id]: action.payload },
+      };
+
+    case CREATE_PRODUCTS_ERROR:
+      // return error
+      return state;
 
     default:
       return state;
@@ -41,6 +55,11 @@ export const getProductsError = (error) => ({
   error,
 });
 
+export const createProductSuccess = (payload) => ({
+  type: CREATE_PRODUCTS_SUCCESS,
+  payload,
+});
+
 export const fetchProducts = () => (dispatch) => {
   dispatch(loadingProducts());
   return axios
@@ -51,5 +70,19 @@ export const fetchProducts = () => (dispatch) => {
     })
     .catch((err) => {
       dispatch(getProductsError(err));
+    });
+};
+
+export const createProduct = (data, push) => (dispatch) => {
+  dispatch(loadingProducts());
+  return axios
+    .post("http://localhost:3000/products", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((res) => {
+      console.log(res.data);
+      dispatch(createProductSuccess(res.data.result));
     });
 };

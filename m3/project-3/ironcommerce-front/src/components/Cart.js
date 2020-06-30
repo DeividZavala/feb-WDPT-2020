@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { denormalizeData } from "../utils/formatters";
+import { Link } from "react-router-dom";
 
 const CartItemContainer = styled.div`
   display: flex;
@@ -45,15 +48,15 @@ const CheckoutBtn = styled.a`
   }
 `;
 
-const CartItem = () => {
+const CartItem = ({ images, title, price, quantity }) => {
   return (
     <CartItemContainer className="uk-child-width-auto">
-      <ProductImg src="https://getuikit.com/docs/images/dark.jpg" alt="" />
+      <ProductImg src={images[0]} alt="" />
       <div className="uk-flex uk-flex-column">
-        <span className="uk-text-truncate uk-padding-small">
-          asdasdadadadasd
+        <span className="uk-text-truncate uk-padding-small">{title}</span>
+        <span>
+          ${price}.00 x{quantity}
         </span>
-        <span>$120.00 x1</span>
       </div>
       <span className="uk-width-1-4 pointed remove-icon" uk-icon="trash" />
     </CartItemContainer>
@@ -61,6 +64,12 @@ const CartItem = () => {
 };
 
 const Cart = () => {
+  const items = useSelector((state) => state.cart.items);
+  const products = denormalizeData(items);
+  const total = products.reduce(
+    (acc, item) => (acc += item.info.price * item.quantity),
+    0
+  );
   return (
     <div id="cart" uk-offcanvas="mode: push; overlay: true; flip:true">
       <div className="uk-offcanvas-bar uk-padding-small">
@@ -73,18 +82,15 @@ const Cart = () => {
         <h3>Your Cart</h3>
 
         <ItemsContainer>
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
+          {products.map((product) => (
+            <CartItem {...product.info} quantity={product.quantity} />
+          ))}
         </ItemsContainer>
         <TotalContainer>
-          Total: $1213.00
-          <CheckoutBtn className="uk-button">Checkout</CheckoutBtn>
+          Total: ${total}.00
+          <Link to="/checkout">
+            <CheckoutBtn className="uk-button">Checkout</CheckoutBtn>
+          </Link>
         </TotalContainer>
       </div>
     </div>
